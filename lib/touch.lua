@@ -29,17 +29,17 @@ local lib = {}
 local touchscreen, w, h
 
 -- tw and th are the screen resolution, in pixels.
--- touchscreen is the **absolute** path in /dev/input to the raw touchscreen
+-- ts is the **absolute** path in /dev/input to the raw touchscreen
 -- device (i.e. /dev/input/event1).
-function lib.init(tw, th, touchscreen)
+function lib.init(ts, tw, th)
 	w, h = tw, th
-	touchscreen = assert(io.open(touchscreen, "r"))
+	touchscreen = assert(io.open(ts, "r"))
 	return true
 end
 
 -- errors if the library has not properly been initialized.
 local function chinit()
-	if not touchscreen and w and h then
+	if not (touchscreen and w and h) then
 		error("attempt to use touchscreen without proper initialization")
 	end
 end
@@ -69,10 +69,12 @@ function lib.pull_event()
 	while true do
 		-- Retrieve an event.
 		local et, ec, ev = get_event()
-		-- If the event is rcognized, process it.
+		--print(et, ec, ev)
+		-- If the event is recognized, process it.
 		if events[et] then
 			local ed = events[et]
 			local cd = ed.codes[ec]
+			--print(ed.name, cd)
 			if ed.name == "SYN_REPORT" then
 				-- Ignore this.  It seems to be unnecessary.
 				-- If I find a use for it later I'll add
@@ -84,8 +86,10 @@ function lib.pull_event()
 					y = ev
 				end
 			elseif ed.name == "EV_KEY" then
-				if cd == "BTN_TOUCH" then
+				if cd == "BTN_TOUCH" and x ~= 0 and y ~= 0
+						and ev == 0 then
 					-- This means the user removed their finger
+					-- and there isn't a "ghost tap" at [0,0]
 					-- so we can register a tap and return [x,y].
 					return x, y
 				end
@@ -93,3 +97,5 @@ function lib.pull_event()
 		end
 	end
 end
+
+return lib
