@@ -1,6 +1,7 @@
 -- Library for drawing things on the Linux framebuffer
 
 local framebuffer, w, h, o, offsetcoords
+o = 0
 
 local lib = {}
 
@@ -56,7 +57,7 @@ function lib.write_at(x, y, text)
 	if offsetcoords then
 	  y = y - 1
 	end
-	local byte = (x + y * (w + o)) * 4
+	local byte = (x * 4) + (y * (w + o) * 2) - 4
 	if fbcp ~= byte then
 		fbcp = framebuffer:seek("set", byte)
 	end
