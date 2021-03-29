@@ -90,8 +90,4 @@ function lib.fill_area(x, y, w, h, color)
 	return true
 end
 
--- Possible features in the future:
---   - Text drawing support
---   - Basic image support
-
 return lib
