@@ -14,7 +14,7 @@ local font = {}
 function lib.load_font(file)
   local handle = assert(io.open(file, "r"))
   repeat
-    local char, data = handle:read(1, 13)
+    local char, data = handle:read(1, 12)
     if char and data then font[char] = data end
   until not char
 end
@@ -23,16 +23,25 @@ end
 -- 'scale' (must be integer)
 function lib.draw_glyph(x, y, char, color, scale)
   if not font[char] then return end
-  for i=1, 13, 1 do
+  for i=1, 12, 1 do
     local n = font[char]:sub(i,i):byte()
     for b=0, 7, 1 do
       local draw = n & (2^b) ~= 0
       if draw then
-        fb.fill_area(x + (b * scale), y + (i - 1) * scale, color)
+        fb.fill_area(x + (b * scale), y + (i - 1) * scale, scale, scale, color)
       end
     end
   end
   return true
+end
+
+-- like draw_glyph, but takes a multi-character string
+function lib.write_at(x, y, str, color, scale)
+	local jump = 10 * scale
+	for i=1, #str, 1 do
+		local dx = x + (jump * i)
+		lib.draw_glyph(dx, y, str:sub(i,i), color, scale)
+	end
 end
 
 return lib
