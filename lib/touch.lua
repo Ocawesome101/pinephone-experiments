@@ -63,5 +63,33 @@ local function get_event()
 	return data_pattern:unpack(data)
 end
 
+-- Get a tap.
 function lib.pull_event()
+	local x, y = 0, 0
+	while true do
+		-- Retrieve an event.
+		local et, ec, ev = get_event()
+		-- If the event is rcognized, process it.
+		if events[et] then
+			local ed = events[et]
+			local cd = ed.codes[ec]
+			if ed.name == "SYN_REPORT" then
+				-- Ignore this.  It seems to be unnecessary.
+				-- If I find a use for it later I'll add
+				-- handling here.
+			elseif ed.name == "EV_ABS" then
+				if cd == "ABS_MT_POSITION_X" or c == "ABS_X" then
+					x = ev
+				elseif cd == "ABS_MT_POSITION_Y" or c == "ABS_Y" then
+					y = ev
+				end
+			elseif ed.name == "EV_KEY" then
+				if cd == "BTN_TOUCH" then
+					-- This means the user removed their finger
+					-- so we can register a tap and return [x,y].
+					return x, y
+				end
+			end
+		end
+	end
 end
