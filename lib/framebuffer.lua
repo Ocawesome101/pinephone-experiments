@@ -1,6 +1,6 @@
 -- Library for drawing things on the Linux framebuffer
 
-local framebuffer, w, h, offsetcoords
+local framebuffer, w, h, o, offsetcoords
 
 local lib = {}
 
@@ -27,6 +27,7 @@ end
 function lib.init(fb, mw, mh, of)
 	framebuffer = assert(io.open(fb, "w"))
 	w, h = mw, mh
+	o = (16 - w or 0) % 16
 	offsetcoords = not not of
 end
 
@@ -55,7 +56,7 @@ function lib.write_at(x, y, text)
 	if offsetcoords then
 	  y = y - 1
 	end
-	local byte = ((x * 4) + (y * w * 2)) - 4
+	local byte = (x + y * (w + o)) * 4
 	if fbcp ~= byte then
 		fbcp = framebuffer:seek("set", byte)
 	end
@@ -68,7 +69,7 @@ end
 function lib.fill_screen(color)
 	chinit()
 	local fbc = pack_color(unpack_color(color))
-	local towrite = string.rep(fbc, w * h)
+	local towrite = string.rep(fbc, (w + o) * h)
 	lib.write_at(1, 1, towrite)
 	return true
 end
