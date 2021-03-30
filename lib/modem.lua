@@ -8,7 +8,7 @@ local lib = {}
 local modem
 
 function lib.init(md)
-	modem = assert(open(md, 9600))
+	modem = assert(open(md, 115200))
 	-- Configure the sent message validity period to about 3 days.  Also
 	-- configures to send as unicode (hexadecimal).
 	modem:write("AT+CSMP=17,167,0,0\n")
@@ -27,7 +27,7 @@ end
 
 function lib.send_command(cmd)
 	chinit()
-	modem:write(cmd .. "\n")
+	modem:write(cmd .. "\r\n")
 end
 
 -- SMS is currently implemented in text mode.  This is much simpler than PDU
