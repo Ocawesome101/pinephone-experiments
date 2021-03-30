@@ -13,6 +13,8 @@ fb.fill_screen(0x00AAFF)
 fb.fill_area(100, 100, 200, 200, 0xFFFF00)
 fb.fill_area(100, 500, 200, 200, 0xFF0000)
 fn.write_at(100, 100, "CLICK ME", 0x0, 2)
+fn.write_at(100, 500, "EXIT!", 0, 3)
+fn.write_at(1, 1, "large.", 0, 10)
 
 while true do
 	local x, y = ts.pull_event()

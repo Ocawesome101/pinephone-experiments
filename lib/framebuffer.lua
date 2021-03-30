@@ -7,7 +7,7 @@ local lib = {}
 
 -- pack a color for use with the framebuffer
 local function pack_color(r, g, b)
-	print(r, g, b)
+	--print(r, g, b)
 	return string.char(b)..string.char(g)..string.char(r).."\0"
 end
 
