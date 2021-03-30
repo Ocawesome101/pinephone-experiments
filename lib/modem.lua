@@ -11,7 +11,8 @@ function lib.init(md)
 	modem = assert(open(md, 115200))
 	-- Configure the sent message validity period to about 3 days.  Also
 	-- configures to send as unicode (hexadecimal).
-	modem:write("AT+CSMP=17,167,0,0\n")
+	modem:write("AT+CSMP=17,167,0,0\r")
+	print(modem:read(1024, 500))
 end
 
 local function chinit()
@@ -27,7 +28,11 @@ end
 
 function lib.send_command(cmd)
 	chinit()
-	modem:write(cmd .. "\r\n")
+	modem:write(cmd .. "\r")
+	print(cmd)
+	local resp = modem:read(1024, 500)
+	print(resp)
+	return resp
 end
 
 -- SMS is currently implemented in text mode.  This is much simpler than PDU
@@ -37,21 +42,15 @@ end
 function lib.send_sms(num, message_text)
 	-- Ensure that the modem is in SMS text mode
 	lib.send_command("AT+CMGF=1")
-	local cmd = string.format("AT+CMGS=\"+%d\"\n", num)
-	print(cmd)
+	local cmd = string.format("AT+CMGS=\"+%d\"", num)
 	-- Send the command.
 	lib.send_command(cmd)
 	-- Send the message.
 	lib.send_command(message_text)
 	print(message_text)
 	-- Actually send the message.
-	lib.send_command("\26")
+	local data = lib.send_command("\26")
 	-- Read the serial number.
-	local data
-	repeat
-		data = lib.read_message()
-		print("Data: ", data)
-	until data:match("%d")
 	local sn = tonumber(data:match("%d+"))
 	-- Return the serial number.
 	return sn
