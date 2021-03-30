@@ -1,6 +1,7 @@
 -- User interface library.
 
 local fb = require("lib/framebuffer")
+local text = require("lib/fbfont")
 local ui = {}
 
 -- Highest-level concept: Windows
@@ -51,7 +52,6 @@ function page.new(x, y, w, h, bg)
 end
 
 function page:refresh(x,y)
-	self.parent = parent
 	fb.fill_area(self.x+x, self.y+y, self.w, self.h, self.bg)
 	for k, v in pairs(self.children) do
 		v:refresh(self.x+x, self.y=y)
@@ -85,12 +85,11 @@ function view.new(x, y, w, h, bg, sc)
 end
 
 function view:refresh(x, y)
-	self.parent = parent
 	fb.fill_area(self.x+x,self.y+y, self.w, self.h, self.bg)
 	for k, v in pairs(self.children) do
 		-- TODO: better scroll checks?
 		if v.y - self.sy > 0 and v.x - self.sx > 0 then
-			v:refresh(self.x+x, self.y+y)
+			v:refresh(self.x+x-self.sx, self.y+y-self.sy)
 		end
 	end
 end
@@ -99,7 +98,7 @@ function view:tap(x, y)
 	for k, v in pairs(self.children) do
 		if x >= self.x and x <= self.x+self.w
 				and y >= self.y and y <= self.y+self.h then
-			v:tap()
+			v:tap(x-self.x, y-self.y)
 		end
 	end
 end
@@ -115,10 +114,59 @@ end
 local button = {}
 ui.button = button
 
+function button.new(x, y, w, h, text, fg, bg, ts)
+	ts = ts or 2
+	return setmetatable({x=x,y=y,w=w,h=h,text=text,fg=fg,bg=bg,ts=ts},
+		{__index = button})
+end
+
+function button:refresh(x, y)
+	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
+	text.write_at(x+self.x, y+self.y, self.text, self.fg, self.ts)
+end
+
+function button:tap()
+end
+
+function button:scroll()
+end
+
 local label = {}
 ui.label = label
 
+function label.new(x, y, w, h, text, fg, ts)
+	return setmetatable({x=x,y=y,w=w,h=h,text=text,fg=fg,ts=ts},
+		{__index = label})
+end
+
+function label:refresh(x, y)
+	-- text wrapping
+	-- TODO possibly move this to lib/fbfont or perhaps a text utils lib
+	local maxlen = self.w // (self.ts*10) -- assume char spacing of (2*scale)px
+	local lines, n = {}, 0
+	local line = ""
+	for c in self.text:gmatch(".") do
+		n = n + 1
+		if n > maxlen then
+			lines[#lines + 1] = line
+			line = ""
+		end
+		line = line .. c
+	end
+	if #line > 0 then lines[#lines + 1] = line end
+	for i=1, #lines, 1 do
+		text.write_at(self.x+x, self.y+y+(13*i-13), lines[i], self.fg, self.ts)
+	end
+end
+
+function label:tap()
+end
+
+function label:scroll()
+end
+
 local textbox = {}
 ui.textbox = textbox
+-- TODO: textbox element
 
 return ui
