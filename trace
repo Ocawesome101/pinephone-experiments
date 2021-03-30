@@ -1,301 +1,301 @@
-7253  21:06:36.754423 execve("/usr/bin/minicom", ["minicom", "-b", "115200", "-D", "/dev/ttyUSB2"], 0xffffe32da4b0 /* 13 vars */) = 0 <0.000783>
-7253  21:06:36.755795 brk(NULL)         = 0xaaaabdf45000 <0.000026>
-7253  21:06:36.755997 faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory) <0.000039>
-7253  21:06:36.756436 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000039>
-7253  21:06:36.756572 fstat(3, {st_mode=S_IFREG|0644, st_size=130954, ...}) = 0 <0.000024>
-7253  21:06:36.756726 mmap(NULL, 130954, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffb89b2000 <0.000035>
-7253  21:06:36.756840 close(3)          = 0 <0.000022>
-7253  21:06:36.756966 openat(AT_FDCWD, "/usr/lib/libncursesw.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000040>
-7253  21:06:36.757087 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0"..., 832) = 832 <0.000028>
-7253  21:06:36.757204 fstat(3, {st_mode=S_IFREG|0755, st_size=470136, ...}) = 0 <0.000024>
-7253  21:06:36.757312 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffb89ff000 <0.000028>
-7253  21:06:36.757432 mmap(NULL, 535640, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffb892f000 <0.000031>
-7253  21:06:36.757538 mprotect(0xffffb899c000, 65536, PROT_NONE) = 0 <0.000045>
-7253  21:06:36.757653 mmap(0xffffb89ac000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6d000) = 0xffffb89ac000 <0.000050>
-7253  21:06:36.757818 close(3)          = 0 <0.000023>
-7253  21:06:36.757933 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000040>
-7253  21:06:36.758057 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0\267\0"..., 832) = 832 <0.000096>
-7253  21:06:36.758241 fstat(3, {st_mode=S_IFREG|0755, st_size=1827624, ...}) = 0 <0.000023>
-7253  21:06:36.758359 mmap(NULL, 1522096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffb87bb000 <0.000063>
-7253  21:06:36.758512 mprotect(0xffffb8916000, 65536, PROT_NONE) = 0 <0.000054>
-7253  21:06:36.758645 mmap(0xffffb8926000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15b000) = 0xffffb8926000 <0.000051>
-7253  21:06:36.758798 mmap(0xffffb892c000, 10672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffffb892c000 <0.000035>
-7253  21:06:36.758934 close(3)          = 0 <0.000024>
-7253  21:06:36.759089 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffb89fd000 <0.000029>
-7253  21:06:36.759401 mprotect(0xffffb8926000, 12288, PROT_READ) = 0 <0.000038>
-7253  21:06:36.760091 mprotect(0xffffb89ac000, 20480, PROT_READ) = 0 <0.000039>
-7253  21:06:36.760436 mprotect(0xaaaab7f10000, 8192, PROT_READ) = 0 <0.000036>
-7253  21:06:36.760560 mprotect(0xffffb8a04000, 4096, PROT_READ) = 0 <0.000041>
-7253  21:06:36.760709 munmap(0xffffb89b2000, 130954) = 0 <0.000090>
-7253  21:06:36.761084 brk(NULL)         = 0xaaaabdf45000 <0.000024>
-7253  21:06:36.761177 brk(0xaaaabdf66000) = 0xaaaabdf66000 <0.000031>
-7253  21:06:36.761301 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000056>
-7253  21:06:36.761493 fstat(3, {st_mode=S_IFREG|0644, st_size=197696720, ...}) = 0 <0.000025>
-7253  21:06:36.761611 mmap(NULL, 197696720, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffacb31000 <0.000040>
-7253  21:06:36.761746 close(3)          = 0 <0.000025>
-7253  21:06:36.762032 getuid()          = 0 <0.000023>
-7253  21:06:36.762255 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3 <0.000067>
-7253  21:06:36.762404 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory) <0.000091>
-7253  21:06:36.762614 close(3)          = 0 <0.000053>
-7253  21:06:36.762740 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3 <0.000034>
-7253  21:06:36.762846 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory) <0.000042>
-7253  21:06:36.762977 close(3)          = 0 <0.000030>
-7253  21:06:36.763108 openat(AT_FDCWD, "/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 3 <0.000044>
-7253  21:06:36.763247 fstat(3, {st_mode=S_IFREG|0644, st_size=328, ...}) = 0 <0.000024>
-7253  21:06:36.763420 read(3, "# Name Service Switc"..., 4096) = 328 <0.000035>
-7253  21:06:36.763567 read(3, "", 4096) = 0 <0.000025>
-7253  21:06:36.763667 close(3)          = 0 <0.000025>
-7253  21:06:36.763794 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000035>
-7253  21:06:36.763913 fstat(3, {st_mode=S_IFREG|0644, st_size=130954, ...}) = 0 <0.000023>
-7253  21:06:36.764021 mmap(NULL, 130954, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffb89b2000 <0.000042>
-7253  21:06:36.764138 close(3)          = 0 <0.000022>
-7253  21:06:36.764271 openat(AT_FDCWD, "/usr/lib/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000041>
-7253  21:06:36.764395 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0"..., 832) = 832 <0.000027>
-7253  21:06:36.764505 fstat(3, {st_mode=S_IFREG|0755, st_size=47056, ...}) = 0 <0.000022>
-7253  21:06:36.764618 mmap(NULL, 136144, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffacb0f000 <0.000035>
-7253  21:06:36.764729 mprotect(0xffffacb1a000, 61440, PROT_NONE) = 0 <0.000052>
-7253  21:06:36.764852 mmap(0xffffacb29000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0xffffacb29000 <0.000072>
-7253  21:06:36.765026 mmap(0xffffacb2b000, 21456, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffffacb2b000 <0.000034>
-7253  21:06:36.765158 close(3)          = 0 <0.000023>
-7253  21:06:36.765384 mprotect(0xffffacb29000, 4096, PROT_READ) = 0 <0.000037>
-7253  21:06:36.765498 munmap(0xffffb89b2000, 130954) = 0 <0.000064>
-7253  21:06:36.765645 openat(AT_FDCWD, "/etc/passwd", O_RDONLY|O_CLOEXEC) = 3 <0.000039>
-7253  21:06:36.765778 fstat(3, {st_mode=S_IFREG|0644, st_size=1375, ...}) = 0 <0.000023>
-7253  21:06:36.765900 lseek(3, 0, SEEK_SET) = 0 <0.000024>
-7253  21:06:36.766001 read(3, "root:x:0:0::/root:/b"..., 4096) = 1375 <0.000029>
-7253  21:06:36.766202 close(3)          = 0 <0.000028>
-7253  21:06:36.766341 openat(AT_FDCWD, "/etc/minirc.dfl", O_RDONLY) = 3 <0.000038>
-7253  21:06:36.766470 fstat(3, {st_mode=S_IFREG|0644, st_size=129, ...}) = 0 <0.000024>
-7253  21:06:36.766579 read(3, "# $Id: minirc.dfl,v "..., 4096) = 129 <0.000027>
-7253  21:06:36.766690 read(3, "", 4096) = 0 <0.000024>
-7253  21:06:36.766786 close(3)          = 0 <0.000024>
-7253  21:06:36.766881 openat(AT_FDCWD, "/root/.minirc.dfl", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000033>
-7253  21:06:36.767030 openat(AT_FDCWD, "/root/.macros", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000031>
-7253  21:06:36.767168 newfstatat(AT_FDCWD, "/var/run", {st_mode=S_IFDIR|0755, st_size=560, ...}, 0) = 0 <0.000035>
-7253  21:06:36.767305 openat(AT_FDCWD, "/var/run/LCK..ttyUSB2", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000050>
-7253  21:06:36.767443 umask(022)        = 022 <0.000022>
-7253  21:06:36.767535 openat(AT_FDCWD, "/var/run/LCK..ttyUSB2", O_WRONLY|O_CREAT|O_EXCL, 0666) = 3 <0.000063>
-7253  21:06:36.767682 getpid()          = 7253 <0.000022>
-7253  21:06:36.767776 write(3, "      7253\n", 11) = 11 <0.000059>
-7253  21:06:36.767914 close(3)          = 0 <0.000024>
-7253  21:06:36.768006 umask(022)        = 022 <0.000027>
-7253  21:06:36.768104 rt_sigaction(SIGALRM, {sa_handler=0xaaaab7ef24c0, sa_mask=[ALRM], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000025>
-7253  21:06:36.768241 setitimer(ITIMER_REAL, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=20, tv_usec=0}}, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=0}}) = 0 <0.000032>
-7253  21:06:36.768369 openat(AT_FDCWD, "/dev/ttyUSB2", O_RDWR|O_NOCTTY|O_NONBLOCK) = 3 <0.002387>
-7253  21:06:36.770846 fcntl(3, F_GETFL) = 0x20802 (flags O_RDWR|O_NONBLOCK|O_LARGEFILE) <0.000024>
-7253  21:06:36.770948 fcntl(3, F_SETFL, O_RDWR|O_LARGEFILE) = 0 <0.000023>
-7253  21:06:36.771042 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000034>
-7253  21:06:36.771165 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000024>
-7253  21:06:36.771277 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000023>
-7253  21:06:36.771430 ioctl(3, SNDCTL_TMR_START or TCSETS, {B115200 -opost -isig -icanon -echo ...}) = 0 <0.000049>
-7253  21:06:36.771561 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000022>
-7253  21:06:36.771664 ioctl(3, TIOCMSET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.001432>
-7253  21:06:36.773176 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000023>
-7253  21:06:36.773278 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000030>
-7253  21:06:36.773389 ioctl(3, TIOCGRS485, 0xffffd34e15d8) = -1 ENOTTY (Inappropriate ioctl for device) <0.000023>
-7253  21:06:36.773498 setitimer(ITIMER_REAL, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=0}}, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=19, tv_usec=994750}}) = 0 <0.000027>
-7253  21:06:36.773620 rt_sigaction(SIGALRM, {sa_handler=SIG_IGN, sa_mask=[ALRM], sa_flags=SA_RESTART}, {sa_handler=0xaaaab7ef24c0, sa_mask=[ALRM], sa_flags=SA_RESTART}, 8) = 0 <0.000025>
-7253  21:06:36.773744 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000023>
-7253  21:06:36.773847 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000028>
-7253  21:06:36.773954 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000023>
-7253  21:06:36.774056 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000028>
-7253  21:06:36.774192 ioctl(3, TCFLSH, TCIOFLUSH) = 0 <0.000028>
-7253  21:06:36.774329 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000027>
-7253  21:06:36.774498 newfstatat(AT_FDCWD, "/root/.terminfo", 0xaaaabdf473f0, 0) = -1 ENOENT (No such file or directory) <0.000029>
-7253  21:06:36.774626 newfstatat(AT_FDCWD, "/usr/share/terminfo", {st_mode=S_IFDIR|0755, st_size=3488, ...}, 0) = 0 <0.000031>
-7253  21:06:36.774789 faccessat(AT_FDCWD, "/usr/share/terminfo/x/xterm-256color", R_OK) = 0 <0.000045>
-7253  21:06:36.774929 openat(AT_FDCWD, "/usr/share/terminfo/x/xterm-256color", O_RDONLY) = 4 <0.000042>
-7253  21:06:36.775057 fstat(4, {st_mode=S_IFREG|0644, st_size=3810, ...}) = 0 <0.000024>
-7253  21:06:36.775167 read(4, "\36\2%\0&\0\17\0\235\0010\6xterm-25"..., 32768) = 3810 <0.000042>
-7253  21:06:36.775292 read(4, "", 28672) = 0 <0.000023>
-7253  21:06:36.775445 close(4)          = 0 <0.000032>
-7253  21:06:36.775568 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000026>
-7253  21:06:36.775677 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000023>
-7253  21:06:36.775781 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000023>
-7253  21:06:36.775887 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000023>
-7253  21:06:36.775990 ioctl(1, TIOCGWINSZ, {ws_row=30, ws_col=100, ws_xpixel=0, ws_ypixel=0}) = 0 <0.000023>
-7253  21:06:36.776170 ioctl(0, TIOCGWINSZ, {ws_row=30, ws_col=100, ws_xpixel=0, ws_ypixel=0}) = 0 <0.000024>
-7253  21:06:36.776297 write(1, "\33", 1) = 1 <0.000049>
-7253  21:06:36.776428 write(1, "[", 1)  = 1 <0.000030>
-7253  21:06:36.776537 write(1, "!", 1)  = 1 <0.000028>
-7253  21:06:36.776644 write(1, "p", 1)  = 1 <0.000054>
-7253  21:06:36.776822 write(1, "\33", 1) = 1 <0.000038>
-7253  21:06:36.776987 write(1, "[", 1)  = 1 <0.000036>
-7253  21:06:36.777134 write(1, "?", 1)  = 1 <0.000033>
-7253  21:06:36.777260 write(1, "3", 1)  = 1 <0.000031>
-7253  21:06:36.777380 write(1, ";", 1)  = 1 <0.000030>
-7253  21:06:36.777497 write(1, "4", 1)  = 1 <0.000030>
-7253  21:06:36.777610 write(1, "l", 1)  = 1 <0.000029>
-7253  21:06:36.777734 write(1, "\33", 1) = 1 <0.000030>
-7253  21:06:36.777848 write(1, "[", 1)  = 1 <0.000028>
-7253  21:06:36.777957 write(1, "4", 1)  = 1 <0.000027>
-7253  21:06:36.778062 write(1, "l", 1)  = 1 <0.000037>
-7253  21:06:36.778220 write(1, "\33", 1) = 1 <0.000029>
-7253  21:06:36.778332 write(1, ">", 1)  = 1 <0.000027>
-7253  21:06:36.778443 write(1, "\33", 1) = 1 <0.000027>
-7253  21:06:36.778547 write(1, "[", 1)  = 1 <0.000027>
-7253  21:06:36.778652 write(1, "0", 1)  = 1 <0.000028>
-7253  21:06:36.778757 write(1, "m", 1)  = 1 <0.000028>
-7253  21:06:36.778918 write(1, "\33", 1) = 1 <0.000027>
-7253  21:06:36.779023 write(1, "(", 1)  = 1 <0.000027>
-7253  21:06:36.779129 write(1, "B", 1)  = 1 <0.000027>
-7253  21:06:36.779274 ioctl(0, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000032>
-7253  21:06:36.779395 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 opost isig icanon echo ...}) = 0 <0.000035>
-7253  21:06:36.779510 ioctl(0, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000023>
-7253  21:06:36.779612 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 -opost -isig -icanon -echo ...}) = 0 <0.000026>
-7253  21:06:36.779964 write(1, "\33[?1h\33=\33[H\33[2J", 14) = 14 <0.000031>
-7253  21:06:36.780077 rt_sigaction(SIGTERM, {sa_handler=0xaaaab7ed8a14, sa_mask=[TERM], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000025>
-7253  21:06:36.780208 rt_sigaction(SIGHUP, {sa_handler=0xaaaab7ed8a14, sa_mask=[HUP], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.780325 rt_sigaction(SIGINT, {sa_handler=SIG_IGN, sa_mask=[INT], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000023>
-7253  21:06:36.780440 rt_sigaction(SIGQUIT, {sa_handler=SIG_IGN, sa_mask=[QUIT], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.780554 rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[PIPE], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.780668 rt_sigaction(SIGTSTP, {sa_handler=0xaaaab7ed8b80, sa_mask=[TSTP], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.780783 rt_sigaction(SIGTTIN, {sa_handler=SIG_IGN, sa_mask=[TTIN], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000023>
-7253  21:06:36.780899 rt_sigaction(SIGTTOU, {sa_handler=SIG_IGN, sa_mask=[TTOU], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.781013 rt_sigaction(SIGWINCH, {sa_handler=0xaaaab7ed89f0, sa_mask=[WINCH], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000022>
-7253  21:06:36.781129 rt_sigprocmask(SIG_UNBLOCK, [ALRM], NULL, 8) = 0 <0.000022>
-7253  21:06:36.781284 write(1, "\33[0m\33(B\33[7m\33[30;1H\33["..., 21) = 21 <0.000031>
-7253  21:06:36.781395 write(1, "\33[?12l\33[?25h", 12) = 12 <0.000028>
-7253  21:06:36.781541 openat(AT_FDCWD, "/usr/lib/gconv/gconv-modules.cache", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000057>
-7253  21:06:36.781723 openat(AT_FDCWD, "/usr/lib/gconv/gconv-modules", O_RDONLY|O_CLOEXEC) = 4 <0.000043>
-7253  21:06:36.781856 fstat(4, {st_mode=S_IFREG|0644, st_size=56353, ...}) = 0 <0.000025>
-7253  21:06:36.781983 read(4, "# GNU libc iconv con"..., 4096) = 4096 <0.000034>
-7253  21:06:36.782297 read(4, "B1002//\tJUS_I.B1.002"..., 4096) = 4096 <0.000031>
-7253  21:06:36.782645 read(4, "\tISO-IR-110//\t\tISO-8"..., 4096) = 4096 <0.000030>
-7253  21:06:36.783002 read(4, "\t\t\tISO-8859-14//\nali"..., 4096) = 4096 <0.000029>
-7253  21:06:36.783361 read(4, "DIC-ES//\nalias\tEBCDI"..., 4096) = 4096 <0.000029>
-7253  21:06:36.783772 read(4, "CDIC-CP-ES//\t\tIBM284"..., 4096) = 4096 <0.000029>
-7253  21:06:36.784222 read(4, "\t\tIBM863//\nalias\tOSF"..., 4096) = 4096 <0.000031>
-7253  21:06:36.784736 read(4, "937//\t\tIBM937//\nmodu"..., 4096) = 4096 <0.000031>
-7253  21:06:36.784982 brk(0xaaaabdf87000) = 0xaaaabdf87000 <0.000075>
-7253  21:06:36.785482 read(4, "UJIS//\t\t\tEUC-JP//\nmo"..., 4096) = 4096 <0.000040>
-7253  21:06:36.786182 read(4, "lias\tISO2022CN//\t\tIS"..., 4096) = 4096 <0.000037>
-7253  21:06:36.786809 read(4, "O_5427-EXT//\nalias\tI"..., 4096) = 4096 <0.000032>
-7253  21:06:36.787522 read(4, "ost\nmodule\tMAC-SAMI/"..., 4096) = 4096 <0.000033>
-7253  21:06:36.788279 read(4, "112//\t\tINTERNAL\t\tIBM"..., 4096) = 4096 <0.000034>
-7253  21:06:36.789019 read(4, "s\tCP9448//\t\tIBM9448/"..., 4096) = 3105 <0.000032>
-7253  21:06:36.789660 read(4, "", 4096) = 0 <0.000028>
-7253  21:06:36.789767 close(4)          = 0 <0.000039>
-7253  21:06:36.791712 write(1, "\33[?25l              "..., 118) = 118 <0.000056>
-7253  21:06:36.792005 mmap(NULL, 1601536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffac988000 <0.000059>
-7253  21:06:36.796432 write(1, "\33[?12l\33[?25h", 12) = 12 <0.000079>
-7253  21:06:36.796859 openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 4 <0.000081>
-7253  21:06:36.797070 fstat(4, {st_mode=S_IFREG|0644, st_size=2998, ...}) = 0 <0.000080>
-7253  21:06:36.797283 read(4, "# Locale name alias "..., 4096) = 2998 <0.000039>
-7253  21:06:36.797467 read(4, "", 4096) = 0 <0.000027>
-7253  21:06:36.797571 close(4)          = 0 <0.000037>
-7253  21:06:36.797730 openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000041>
-7253  21:06:36.797882 openat(AT_FDCWD, "/usr/share/locale/en_US.utf8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000034>
-7253  21:06:36.798009 openat(AT_FDCWD, "/usr/share/locale/en_US/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000038>
-7253  21:06:36.798205 openat(AT_FDCWD, "/usr/share/locale/en.UTF-8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000048>
-7253  21:06:36.798348 openat(AT_FDCWD, "/usr/share/locale/en.utf8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000034>
-7253  21:06:36.798471 openat(AT_FDCWD, "/usr/share/locale/en/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000036>
-7253  21:06:36.798721 write(1, "\33[?25lCTRL-A Z for h"..., 117) = 117 <0.000048>
-7253  21:06:36.798881 write(1, "\33[1;1H", 6) = 6 <0.000047>
-7253  21:06:36.799097 write(1, "\n\33[0m\33(BWelcome to m"..., 32) = 32 <0.000041>
-7253  21:06:36.799275 write(1, "\nOPTIONS: I18n \r\n", 17) = 17 <0.000035>
-7253  21:06:36.799456 write(1, "Compiled on Jan  9 2"..., 36) = 36 <0.000033>
-7253  21:06:36.799587 newfstatat(AT_FDCWD, "/dev/ttyUSB2", {st_mode=S_IFCHR|0660, st_rdev=makedev(0xbc, 0x2), ...}, 0) = 0 <0.000039>
-7253  21:06:36.799764 openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 4 <0.000060>
-7253  21:06:36.799919 fstat(4, {st_mode=S_IFREG|0644, st_size=1666, ...}) = 0 <0.000026>
-7253  21:06:36.800035 fstat(4, {st_mode=S_IFREG|0644, st_size=1666, ...}) = 0 <0.000025>
-7253  21:06:36.800178 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4096) = 1666 <0.000035>
-7253  21:06:36.800301 lseek(4, -1043, SEEK_CUR) = 623 <0.000027>
-7253  21:06:36.800404 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4096) = 1043 <0.000027>
-7253  21:06:36.800528 close(4)          = 0 <0.000035>
-7253  21:06:36.800684 write(1, "Port /dev/ttyUSB2, 2"..., 29) = 29 <0.000036>
-7253  21:06:36.800841 write(1, "\nPress CTRL-A Z for "..., 43) = 43 <0.000041>
-7253  21:06:36.801004 openat(AT_FDCWD, "/root/.dialdir", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000053>
-7253  21:06:36.801213 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 opost isig icanon echo ...}) = 0 <0.000045>
-7253  21:06:36.801356 ioctl(0, TCGETS, {B38400 opost isig icanon echo ...}) = 0 <0.000025>
-7253  21:06:36.801464 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 -opost -isig -icanon -echo ...}) = 0 <0.000027>
-7253  21:06:36.801574 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000029>
-7253  21:06:36.801704 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000026>
-7253  21:06:36.801843 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001150>
-7253  21:06:37.803232 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000052>
-7253  21:06:37.803598 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000051>
-7253  21:06:37.803807 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001182>
-7253  21:06:38.805280 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000053>
-7253  21:06:38.805659 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000055>
-7253  21:06:38.805875 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001160>
-7253  21:06:39.807408 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000053>
-7253  21:06:39.807773 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000057>
-7253  21:06:39.807991 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001145>
-7253  21:06:40.809397 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000050>
-7253  21:06:40.809749 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000054>
-7253  21:06:40.809961 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=611566823}) <0.388522>
-7253  21:06:41.198905 ioctl(0, KDGETLED, 0xffffd34e14c8) = -1 ENOTTY (Inappropriate ioctl for device) <0.000052>
-7253  21:06:41.199186 read(0, "A", 32)  = 1 <0.000059>
-7253  21:06:41.199417 write(3, "A", 1)  = 1 <0.000098>
-7253  21:06:41.199661 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
-7253  21:06:41.199916 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
-7253  21:06:41.200115 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=761749544}) <0.238327>
-7253  21:06:41.438734 read(0, "T", 32)  = 1 <0.000060>
-7253  21:06:41.439006 write(3, "T", 1)  = 1 <0.000087>
-7253  21:06:41.439239 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
-7253  21:06:41.439496 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000050>
-7253  21:06:41.439697 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001150>
-7253  21:06:42.441132 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000054>
-7253  21:06:42.441510 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000057>
-7253  21:06:42.441729 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=875281843}) <0.124781>
-7253  21:06:42.566765 read(0, "+", 32)  = 1 <0.000061>
-7253  21:06:42.567022 write(3, "+", 1)  = 1 <0.000094>
-7253  21:06:42.567262 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
-7253  21:06:42.567513 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000050>
-7253  21:06:42.567713 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=421248107}) <0.578835>
-7253  21:06:43.146871 read(0, "C", 32)  = 1 <0.000060>
-7253  21:06:43.147149 write(3, "C", 1)  = 1 <0.000092>
-7253  21:06:43.147390 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
-7253  21:06:43.147651 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000050>
-7253  21:06:43.147851 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=837449719}) <0.162618>
-7253  21:06:43.310738 read(0, "S", 32)  = 1 <0.000056>
-7253  21:06:43.310993 write(3, "S", 1)  = 1 <0.000084>
-7253  21:06:43.311225 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
-7253  21:06:43.311477 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000051>
-7253  21:06:43.311679 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=793315616}) <0.206749>
-7253  21:06:43.518686 read(0, "C", 32)  = 1 <0.000056>
-7253  21:06:43.518937 write(3, "C", 1)  = 1 <0.000084>
-7253  21:06:43.519168 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
-7253  21:06:43.519420 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
-7253  21:06:43.519617 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=817188593}) <0.182892>
-7253  21:06:43.702816 read(0, "S", 32)  = 1 <0.000058>
-7253  21:06:43.703084 write(3, "S", 1)  = 1 <0.000089>
-7253  21:06:43.703319 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000046>
-7253  21:06:43.703575 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
-7253  21:06:43.703774 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=337327929}) <0.662762>
-7253  21:06:44.366944 read(0, "?", 32)  = 1 <0.000060>
-7253  21:06:44.367223 write(3, "?", 1)  = 1 <0.000094>
-7253  21:06:44.367464 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
-7253  21:06:44.367725 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000051>
-7253  21:06:44.367926 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=333476369}) <0.666605>
-7253  21:06:45.034852 read(0, "\r", 32) = 1 <0.000059>
-7253  21:06:45.035128 write(3, "\r", 1) = 1 <0.000093>
-7253  21:06:45.035368 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000050>
-7253  21:06:45.035629 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000053>
-7253  21:06:45.035833 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [3], left {tv_sec=0, tv_nsec=990774822}) <0.009287>
-7253  21:06:45.045326 read(3, 0xffffd34e1658, 127) = ? ERESTARTSYS (To be restarted if SA_RESTART is set) <11.795408>
-7253  21:06:56.840978 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=7260, si_uid=0} ---
-7253  21:06:56.841408 write(1, "\33[8;37H\33[?25l+------"..., 203) = 203 <0.000073>
-7253  21:06:56.841697 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=2, tv_nsec=0}, 0xffffd34e0058) = 0 <2.000180>
-7253  21:06:58.842484 write(1, "\33[?12l\33[?25h\33[8;1HPr"..., 377) = 377 <0.000092>
-7253  21:06:58.843007 write(1, "\33[8;43H\33[?25l+------"..., 143) = 143 <0.000098>
-7253  21:06:58.843330 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000063>
-7253  21:06:58.843676 openat(AT_FDCWD, "/root/minicom.log", O_WRONLY|O_CREAT|O_APPEND, 0666) = 4 <0.000128>
-7253  21:06:58.843992 lseek(4, 0, SEEK_END) = 35 <0.000049>
-7253  21:06:58.844180 newfstatat(AT_FDCWD, "/etc/localtime", {st_mode=S_IFREG|0644, st_size=1666, ...}, 0) = 0 <0.000063>
-7253  21:06:58.844436 fstat(4, {st_mode=S_IFREG|0644, st_size=35, ...}) = 0 <0.000048>
-7253  21:06:58.844655 write(4, "20210329 21:06:58 Ha"..., 35) = 35 <0.000085>
-7253  21:06:58.844889 close(4)          = 0 <0.000061>
-7253  21:06:58.845096 ioctl(3, TIOCMBIC, [TIOCM_DTR]) = 0 <0.002508>
-7253  21:06:58.847769 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0xffffd34e00e8) = 0 <1.000154>
-7253  21:06:59.848196 ioctl(3, TIOCMBIS, [TIOCM_DTR]) = 0 <0.000445>
-7253  21:06:59.849149 write(1, "\33[?12l\33[?25h\33[8;1HPr"..., 347) = 347 <0.000079>
-7253  21:06:59.849452 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 opost isig icanon echo ...}) = 0 <0.000073>
-7253  21:06:59.850025 write(1, "\33[H\33[2J\33[?12l\33[?25h\33"..., 43) = 43 <0.000069>
-7253  21:06:59.850324 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000091>
-7253  21:06:59.850589 ioctl(3, TIOCMSET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000238>
-7253  21:06:59.850997 close(3)          = 0 <0.000080>
-7253  21:06:59.851206 unlinkat(AT_FDCWD, "/var/run/LCK..ttyUSB2", 0) = 0 <0.000165>
-7253  21:06:59.851535 write(2, "\n", 1) = 1 <0.000065>
-7253  21:06:59.851799 exit_group(1)     = ?
-7253  21:06:59.854229 +++ exited with 1 +++
+7940  01:16:11.146713 execve("/usr/bin/minicom", ["minicom", "-b", "115200", "-D", "/dev/ttyUSB2"], 0xffffc7fe3d70 /* 13 vars */) = 0 <0.000942>
+7940  01:16:11.148364 brk(NULL)         = 0xaaaae6cd2000 <0.000033>
+7940  01:16:11.148616 faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory) <0.000052>
+7940  01:16:11.149162 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000050>
+7940  01:16:11.149349 fstat(3, {st_mode=S_IFREG|0644, st_size=130954, ...}) = 0 <0.000032>
+7940  01:16:11.149543 mmap(NULL, 130954, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffae817000 <0.000045>
+7940  01:16:11.149693 close(3)          = 0 <0.000030>
+7940  01:16:11.149857 openat(AT_FDCWD, "/usr/lib/libncursesw.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000055>
+7940  01:16:11.150023 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\200b\1\0\0\0\0\0@\0\0\0\0\0\0\08&\7\0\0\0\0\0\0\0\0\0@\08\0\7\0@\0\31\0\30\0\1\0\0\0\5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0H\317\6\0\0\0\0\0H\317\6\0\0\0\0\0\0\0\1\0\0\0\0\0\1\0\0\0\6\0\0\0"..., 832) = 832 <0.000164>
+7940  01:16:11.150321 fstat(3, {st_mode=S_IFREG|0755, st_size=470136, ...}) = 0 <0.000033>
+7940  01:16:11.150473 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffae864000 <0.000040>
+7940  01:16:11.150639 mmap(NULL, 535640, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffae794000 <0.000043>
+7940  01:16:11.150785 mprotect(0xffffae801000, 65536, PROT_NONE) = 0 <0.000057>
+7940  01:16:11.150938 mmap(0xffffae811000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6d000) = 0xffffae811000 <0.000069>
+7940  01:16:11.151158 close(3)          = 0 <0.000032>
+7940  01:16:11.151336 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000056>
+7940  01:16:11.151506 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\200F\2\0\0\0\0\0@\0\0\0\0\0\0\0\250\322\33\0\0\0\0\0\0\0\0\0@\08\0\n\0@\0B\0A\0\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0000\2\0\0\0\0\0\0000\2\0\0\0\0\0\0\10\0\0\0\0\0\0\0\3\0\0\0\4\0\0\0"..., 832) = 832 <0.000037>
+7940  01:16:11.151658 fstat(3, {st_mode=S_IFREG|0755, st_size=1827624, ...}) = 0 <0.000030>
+7940  01:16:11.151804 mmap(NULL, 1522096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffae620000 <0.000044>
+7940  01:16:11.151949 mprotect(0xffffae77b000, 65536, PROT_NONE) = 0 <0.000060>
+7940  01:16:11.152104 mmap(0xffffae78b000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15b000) = 0xffffae78b000 <0.000057>
+7940  01:16:11.152283 mmap(0xffffae791000, 10672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffffae791000 <0.000045>
+7940  01:16:11.152455 close(3)          = 0 <0.000031>
+7940  01:16:11.152640 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffae862000 <0.000038>
+7940  01:16:11.153033 mprotect(0xffffae78b000, 12288, PROT_READ) = 0 <0.000049>
+7940  01:16:11.153882 mprotect(0xffffae811000, 20480, PROT_READ) = 0 <0.000047>
+7940  01:16:11.154351 mprotect(0xaaaaaaef0000, 8192, PROT_READ) = 0 <0.000044>
+7940  01:16:11.154518 mprotect(0xffffae869000, 4096, PROT_READ) = 0 <0.000055>
+7940  01:16:11.154717 munmap(0xffffae817000, 130954) = 0 <0.000116>
+7940  01:16:11.155213 brk(NULL)         = 0xaaaae6cd2000 <0.000033>
+7940  01:16:11.155340 brk(0xaaaae6cf3000) = 0xaaaae6cf3000 <0.000041>
+7940  01:16:11.155509 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000070>
+7940  01:16:11.155730 fstat(3, {st_mode=S_IFREG|0644, st_size=197696720, ...}) = 0 <0.000032>
+7940  01:16:11.155885 mmap(NULL, 197696720, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffa2996000 <0.000050>
+7940  01:16:11.156062 close(3)          = 0 <0.000033>
+7940  01:16:11.156465 getuid()          = 0 <0.000032>
+7940  01:16:11.156609 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3 <0.000072>
+7940  01:16:11.156784 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory) <0.000112>
+7940  01:16:11.157040 close(3)          = 0 <0.000064>
+7940  01:16:11.157259 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3 <0.000046>
+7940  01:16:11.157404 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory) <0.000057>
+7940  01:16:11.157582 close(3)          = 0 <0.000042>
+7940  01:16:11.157742 openat(AT_FDCWD, "/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 3 <0.000052>
+7940  01:16:11.157920 fstat(3, {st_mode=S_IFREG|0644, st_size=328, ...}) = 0 <0.000032>
+7940  01:16:11.158079 read(3, "# Name Service Switch configuration file.\n# See nsswitch.conf(5) for details.\n\npasswd: files systemd\ngroup: files [SUCCESS=merge"..., 4096) = 328 <0.000047>
+7940  01:16:11.158316 read(3, "", 4096) = 0 <0.000034>
+7940  01:16:11.158449 close(3)          = 0 <0.000034>
+7940  01:16:11.158611 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000048>
+7940  01:16:11.158773 fstat(3, {st_mode=S_IFREG|0644, st_size=130954, ...}) = 0 <0.000031>
+7940  01:16:11.158915 mmap(NULL, 130954, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffffae817000 <0.000047>
+7940  01:16:11.159062 close(3)          = 0 <0.000030>
+7940  01:16:11.159231 openat(AT_FDCWD, "/usr/lib/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000051>
+7940  01:16:11.159394 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0 (\0\0\0\0\0\0@\0\0\0\0\0\0\0\20\261\0\0\0\0\0\0\0\0\0\0@\08\0\7\0@\0\33\0\32\0\1\0\0\0\5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\370\242\0\0\0\0\0\0\370\242\0\0\0\0\0\0\0\0\1\0\0\0\0\0\1\0\0\0\6\0\0\0"..., 832) = 832 <0.000036>
+7940  01:16:11.159548 fstat(3, {st_mode=S_IFREG|0755, st_size=47056, ...}) = 0 <0.000031>
+7940  01:16:11.159698 mmap(NULL, 136144, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffffa2974000 <0.000044>
+7940  01:16:11.159845 mprotect(0xffffa297f000, 61440, PROT_NONE) = 0 <0.000063>
+7940  01:16:11.160004 mmap(0xffffa298e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0xffffa298e000 <0.000083>
+7940  01:16:11.160218 mmap(0xffffa2990000, 21456, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffffa2990000 <0.000046>
+7940  01:16:11.160393 close(3)          = 0 <0.000031>
+7940  01:16:11.160678 mprotect(0xffffa298e000, 4096, PROT_READ) = 0 <0.000047>
+7940  01:16:11.160826 munmap(0xffffae817000, 130954) = 0 <0.000078>
+7940  01:16:11.161013 openat(AT_FDCWD, "/etc/passwd", O_RDONLY|O_CLOEXEC) = 3 <0.000051>
+7940  01:16:11.161185 fstat(3, {st_mode=S_IFREG|0644, st_size=1375, ...}) = 0 <0.000031>
+7940  01:16:11.161343 lseek(3, 0, SEEK_SET) = 0 <0.000033>
+7940  01:16:11.161477 read(3, "root:x:0:0::/root:/bin/bash\nbin:x:1:1::/:/usr/bin/nologin\ndaemon:x:2:2::/:/usr/bin/nologin\nmail:x:8:12::/var/spool/mail:/usr/bin"..., 4096) = 1375 <0.000038>
+7940  01:16:11.161636 close(3)          = 0 <0.000033>
+7940  01:16:11.161801 openat(AT_FDCWD, "/etc/minirc.dfl", O_RDONLY) = 3 <0.000047>
+7940  01:16:11.161965 fstat(3, {st_mode=S_IFREG|0644, st_size=129, ...}) = 0 <0.000032>
+7940  01:16:11.162204 read(3, "# $Id: minirc.dfl,v 1.1.1.1 2003-03-30 18:55:39 al-guest Exp $\n# Machine-generated file - use \"minicom -s\" to change parameters."..., 4096) = 129 <0.000039>
+7940  01:16:11.162363 read(3, "", 4096) = 0 <0.000033>
+7940  01:16:11.162494 close(3)          = 0 <0.000034>
+7940  01:16:11.162625 openat(AT_FDCWD, "/root/.minirc.dfl", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000081>
+7940  01:16:11.162858 openat(AT_FDCWD, "/root/.macros", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000056>
+7940  01:16:11.163056 newfstatat(AT_FDCWD, "/var/run", {st_mode=S_IFDIR|0755, st_size=560, ...}, 0) = 0 <0.000046>
+7940  01:16:11.163239 openat(AT_FDCWD, "/var/run/LCK..ttyUSB2", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000057>
+7940  01:16:11.163415 umask(022)        = 022 <0.000030>
+7940  01:16:11.163571 openat(AT_FDCWD, "/var/run/LCK..ttyUSB2", O_WRONLY|O_CREAT|O_EXCL, 0666) = 3 <0.000089>
+7940  01:16:11.163777 getpid()          = 7940 <0.000030>
+7940  01:16:11.163905 write(3, "      7940\n", 11) = 11 <0.000073>
+7940  01:16:11.164085 close(3)          = 0 <0.000033>
+7940  01:16:11.164252 umask(022)        = 022 <0.000029>
+7940  01:16:11.164376 rt_sigaction(SIGALRM, {sa_handler=0xaaaaaaed24c0, sa_mask=[ALRM], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000033>
+7940  01:16:11.164562 setitimer(ITIMER_REAL, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=20, tv_usec=0}}, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=0}}) = 0 <0.000041>
+7940  01:16:11.164733 openat(AT_FDCWD, "/dev/ttyUSB2", O_RDWR|O_NOCTTY|O_NONBLOCK) = 3 <0.000426>
+7940  01:16:11.165275 fcntl(3, F_GETFL) = 0x20802 (flags O_RDWR|O_NONBLOCK|O_LARGEFILE) <0.000031>
+7940  01:16:11.165407 fcntl(3, F_SETFL, O_RDWR|O_LARGEFILE) = 0 <0.000030>
+7940  01:16:11.165534 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000042>
+7940  01:16:11.165694 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000032>
+7940  01:16:11.165840 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000031>
+7940  01:16:11.165985 ioctl(3, SNDCTL_TMR_START or TCSETS, {B115200 -opost -isig -icanon -echo ...}) = 0 <0.000100>
+7940  01:16:11.166204 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000031>
+7940  01:16:11.166348 ioctl(3, TIOCMSET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000650>
+7940  01:16:11.167109 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000032>
+7940  01:16:11.167250 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000040>
+7940  01:16:11.167400 ioctl(3, TIOCGRS485, 0xffffe2ced2a8) = -1 ENOTTY (Inappropriate ioctl for device) <0.000031>
+7940  01:16:11.167542 setitimer(ITIMER_REAL, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=0}}, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=19, tv_usec=997013}}) = 0 <0.000034>
+7940  01:16:11.167717 rt_sigaction(SIGALRM, {sa_handler=SIG_IGN, sa_mask=[ALRM], sa_flags=SA_RESTART}, {sa_handler=0xaaaaaaed24c0, sa_mask=[ALRM], sa_flags=SA_RESTART}, 8) = 0 <0.000033>
+7940  01:16:11.167883 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000031>
+7940  01:16:11.168022 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000038>
+7940  01:16:11.168169 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000031>
+7940  01:16:11.168307 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000036>
+7940  01:16:11.168451 ioctl(3, TCFLSH, TCIOFLUSH) = 0 <0.000036>
+7940  01:16:11.168631 ioctl(1, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000035>
+7940  01:16:11.168865 newfstatat(AT_FDCWD, "/root/.terminfo", 0xaaaae6cd43f0, 0) = -1 ENOENT (No such file or directory) <0.000068>
+7940  01:16:11.169061 newfstatat(AT_FDCWD, "/usr/share/terminfo", {st_mode=S_IFDIR|0755, st_size=3488, ...}, 0) = 0 <0.000041>
+7940  01:16:11.169270 faccessat(AT_FDCWD, "/usr/share/terminfo/x/xterm-color", R_OK) = 0 <0.000057>
+7940  01:16:11.169451 openat(AT_FDCWD, "/usr/share/terminfo/x/xterm-color", O_RDONLY) = 4 <0.000053>
+7940  01:16:11.169626 fstat(4, {st_mode=S_IFREG|0644, st_size=1551, ...}) = 0 <0.000033>
+7940  01:16:11.169776 read(4, "\32\1'\0&\0\20\0\235\1[\2xterm-color|nxterm|generic color xterm\0\0\1\0\0\1\0\0\0\1\0\0\0\0\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\1\0P\0\10\0\30\0\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\10\0@\0\376\377\377\377\0\0\2\0"..., 32768) = 1551 <0.000042>
+7940  01:16:11.169934 read(4, "", 28672) = 0 <0.000031>
+7940  01:16:11.170217 close(4)          = 0 <0.000044>
+7940  01:16:11.170393 ioctl(1, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000037>
+7940  01:16:11.170546 ioctl(1, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000032>
+7940  01:16:11.170685 ioctl(1, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000031>
+7940  01:16:11.170827 ioctl(1, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000031>
+7940  01:16:11.170965 ioctl(1, TIOCGWINSZ, {ws_row=24, ws_col=80, ws_xpixel=560, ws_ypixel=336}) = 0 <0.000032>
+7940  01:16:11.171169 ioctl(0, TIOCGWINSZ, {ws_row=24, ws_col=80, ws_xpixel=560, ws_ypixel=336}) = 0 <0.000033>
+7940  01:16:11.171387 write(1, "\33", 1) = 1 <0.000062>
+7940  01:16:11.171590 write(1, "[", 1)  = 1 <0.000046>
+7940  01:16:11.171744 write(1, "m", 1)  = 1 <0.000040>
+7940  01:16:11.171906 write(1, "\33", 1) = 1 <0.000106>
+7940  01:16:11.172149 write(1, "[", 1)  = 1 <0.000061>
+7940  01:16:11.172345 write(1, "?", 1)  = 1 <0.000052>
+7940  01:16:11.172524 write(1, "7", 1)  = 1 <0.000045>
+7940  01:16:11.172693 write(1, "h", 1)  = 1 <0.000040>
+7940  01:16:11.172851 write(1, "\33", 1) = 1 <0.000042>
+7940  01:16:11.173009 write(1, "[", 1)  = 1 <0.000040>
+7940  01:16:11.173162 write(1, "4", 1)  = 1 <0.000041>
+7940  01:16:11.173318 write(1, "l", 1)  = 1 <0.000038>
+7940  01:16:11.173467 write(1, "\33", 1) = 1 <0.000037>
+7940  01:16:11.173644 write(1, ">", 1)  = 1 <0.000038>
+7940  01:16:11.173790 write(1, "\33", 1) = 1 <0.000037>
+7940  01:16:11.173936 write(1, "7", 1)  = 1 <0.000037>
+7940  01:16:11.174078 write(1, "\33", 1) = 1 <0.000048>
+7940  01:16:11.174301 write(1, "[", 1)  = 1 <0.000041>
+7940  01:16:11.174454 write(1, "r", 1)  = 1 <0.000040>
+7940  01:16:11.174604 write(1, "\33", 1) = 1 <0.000041>
+7940  01:16:11.174754 write(1, "[", 1)  = 1 <0.000040>
+7940  01:16:11.174903 write(1, "?", 1)  = 1 <0.000040>
+7940  01:16:11.175051 write(1, "1", 1)  = 1 <0.000040>
+7940  01:16:11.175201 write(1, ";", 1)  = 1 <0.000040>
+7940  01:16:11.175349 write(1, "3", 1)  = 1 <0.000039>
+7940  01:16:11.175498 write(1, ";", 1)  = 1 <0.000040>
+7940  01:16:11.175648 write(1, "4", 1)  = 1 <0.000040>
+7940  01:16:11.175814 write(1, ";", 1)  = 1 <0.000039>
+7940  01:16:11.175962 write(1, "6", 1)  = 1 <0.000039>
+7940  01:16:11.176110 write(1, "l", 1)  = 1 <0.000040>
+7940  01:16:11.176258 write(1, "\33", 1) = 1 <0.000040>
+7940  01:16:11.176405 write(1, "8", 1)  = 1 <0.000039>
+7940  01:16:11.176558 write(1, "\33", 1) = 1 <0.000039>
+7940  01:16:11.176708 write(1, "[", 1)  = 1 <0.000070>
+7940  01:16:11.176908 write(1, "m", 1)  = 1 <0.000373>
+7940  01:16:11.177456 write(1, "\17", 1) = 1 <0.000070>
+7940  01:16:11.177817 ioctl(0, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000048>
+7940  01:16:11.178054 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B9600 opost isig icanon echo ...}) = 0 <0.000055>
+7940  01:16:11.178292 ioctl(0, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000034>
+7940  01:16:11.178441 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000037>
+7940  01:16:11.178817 write(1, "\33)0\33[?1h\33=\33[H\33[2J", 17) = 17 <0.000051>
+7940  01:16:11.178984 rt_sigaction(SIGTERM, {sa_handler=0xaaaaaaeb8a14, sa_mask=[TERM], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000036>
+7940  01:16:11.179193 rt_sigaction(SIGHUP, {sa_handler=0xaaaaaaeb8a14, sa_mask=[HUP], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000034>
+7940  01:16:11.179380 rt_sigaction(SIGINT, {sa_handler=SIG_IGN, sa_mask=[INT], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000033>
+7940  01:16:11.179542 rt_sigaction(SIGQUIT, {sa_handler=SIG_IGN, sa_mask=[QUIT], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000033>
+7940  01:16:11.179703 rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[PIPE], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000033>
+7940  01:16:11.179872 rt_sigaction(SIGTSTP, {sa_handler=0xaaaaaaeb8b80, sa_mask=[TSTP], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000052>
+7940  01:16:11.180175 rt_sigaction(SIGTTIN, {sa_handler=SIG_IGN, sa_mask=[TTIN], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000234>
+7940  01:16:11.180571 rt_sigaction(SIGTTOU, {sa_handler=SIG_IGN, sa_mask=[TTOU], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000035>
+7940  01:16:11.180751 rt_sigaction(SIGWINCH, {sa_handler=0xaaaaaaeb89f0, sa_mask=[WINCH], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0 <0.000033>
+7940  01:16:11.180917 rt_sigprocmask(SIG_UNBLOCK, [ALRM], NULL, 8) = 0 <0.000035>
+7940  01:16:11.181196 mmap(NULL, 1282048, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffa283b000 <0.000068>
+7940  01:16:11.185326 openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 4 <0.000114>
+7940  01:16:11.185777 fstat(4, {st_mode=S_IFREG|0644, st_size=2998, ...}) = 0 <0.000036>
+7940  01:16:11.186041 read(4, "# Locale name alias data base.\n# Copyright (C) 1996-2020 Free Software Foundation, Inc.\n#\n# This program is free software; you c"..., 4096) = 2998 <0.000066>
+7940  01:16:11.186436 read(4, "", 4096) = 0 <0.000039>
+7940  01:16:11.186594 close(4)          = 0 <0.000048>
+7940  01:16:11.186837 openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000076>
+7940  01:16:11.187118 openat(AT_FDCWD, "/usr/share/locale/en_US.utf8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000048>
+7940  01:16:11.187305 openat(AT_FDCWD, "/usr/share/locale/en_US/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000092>
+7940  01:16:11.187523 openat(AT_FDCWD, "/usr/share/locale/en.UTF-8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000044>
+7940  01:16:11.187691 openat(AT_FDCWD, "/usr/share/locale/en.utf8/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000043>
+7940  01:16:11.187863 openat(AT_FDCWD, "/usr/share/locale/en/LC_MESSAGES/minicom.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000126>
+7940  01:16:11.188184 openat(AT_FDCWD, "/usr/lib/gconv/gconv-modules.cache", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000051>
+7940  01:16:11.188387 openat(AT_FDCWD, "/usr/lib/gconv/gconv-modules", O_RDONLY|O_CLOEXEC) = 4 <0.000056>
+7940  01:16:11.188572 fstat(4, {st_mode=S_IFREG|0644, st_size=56353, ...}) = 0 <0.000036>
+7940  01:16:11.188783 read(4, "# GNU libc iconv configuration.\n# Copyright (C) 1997-2020 Free Software Foundation, Inc.\n# This file is part of the GNU C Librar"..., 4096) = 4096 <0.000050>
+7940  01:16:11.189146 read(4, "B1002//\tJUS_I.B1.002//\nmodule\tJUS_I.B1.002//\t\tINTERNAL\t\tISO646\t\t2\nmodule\tINTERNAL\t\tJUS_I.B1.002//\t\tISO646\t\t2\n\nalias\tISO646-KR//\t"..., 4096) = 4096 <0.000043>
+7940  01:16:11.189611 read(4, "\tISO-IR-110//\t\tISO-8859-4//\nalias\tISO_8859-4:1988//\tISO-8859-4//\nalias\tISO_8859-4//\t\tISO-8859-4//\nalias\tISO8859-4//\t\tISO-8859-4/"..., 4096) = 4096 <0.000043>
+7940  01:16:11.190370 read(4, "\t\t\tISO-8859-14//\nalias\tISO_8859-14:1998//\tISO-8859-14//\nalias\tISO_8859-14//\t\tISO-8859-14//\nalias\tISO-CELTIC//\t\tISO-8859-14//\nmod"..., 4096) = 4096 <0.000055>
+7940  01:16:11.190987 read(4, "DIC-ES//\nalias\tEBCDICES//\t\tEBCDIC-ES//\nmodule\tEBCDIC-ES//\t\tINTERNAL\t\tEBCDIC-ES\t1\nmodule\tINTERNAL\t\tEBCDIC-ES//\t\tEBCDIC-ES\t1\n\n#\tfr"..., 4096) = 4096 <0.000129>
+7940  01:16:11.191710 read(4, "CDIC-CP-ES//\t\tIBM284//\nalias\tCSIBM284//\t\tIBM284//\nalias\tOSF1002011C//\t\tIBM284//\nalias\tCP1079//\t\tIBM284//\nmodule\tIBM284//\t\tINTERN"..., 4096) = 4096 <0.000051>
+7940  01:16:11.192524 read(4, "\t\tIBM863//\nalias\tOSF1002035F//\t\tIBM863//\nmodule\tIBM863//\t\tINTERNAL\t\tIBM863\t\t1\nmodule\tINTERNAL\t\tIBM863//\t\tIBM863\t\t1\n\n#\tfrom\t\t\tto\t"..., 4096) = 4096 <0.000052>
+7940  01:16:11.193181 brk(0xaaaae6d14000) = 0xaaaae6d14000 <0.000064>
+7940  01:16:11.193531 read(4, "937//\t\tIBM937//\nmodule\tIBM937//\t\tINTERNAL\t\tIBM937\t\t1\nmodule\tINTERNAL\t\tIBM937//\t\tIBM937\t\t1\n\n#\tfrom\t\t\tto\t\t\tmodule\t\tcost\nalias\tIBM-"..., 4096) = 4096 <0.000048>
+7940  01:16:11.194399 read(4, "UJIS//\t\t\tEUC-JP//\nmodule\tEUC-JP//\t\tINTERNAL\t\tEUC-JP\t\t1\nmodule\tINTERNAL\t\tEUC-JP//\t\tEUC-JP\t\t1\n\n#\tfrom\t\t\tto\t\t\tmodule\t\tcost\nalias\tEU"..., 4096) = 4096 <0.000091>
+7940  01:16:11.195363 read(4, "lias\tISO2022CN//\t\tISO-2022-CN//\nmodule\tISO-2022-CN//\t\tINTERNAL\t\tISO-2022-CN\t1\nmodule\tINTERNAL\t\tISO-2022-CN//\t\tISO-2022-CN\t1\n\n#\tf"..., 4096) = 4096 <0.000049>
+7940  01:16:11.196286 read(4, "O_5427-EXT//\nalias\tISO_5427EXT//\t\tISO_5427-EXT//\nmodule\tISO_5427-EXT//\t\tINTERNAL\t\tISO_5427-EXT\t1\nmodule\tINTERNAL\t\tISO_5427-EXT//"..., 4096) = 4096 <0.000055>
+7940  01:16:11.197276 read(4, "ost\nmodule\tMAC-SAMI//\t\tINTERNAL\t\tMAC-SAMI\t1\nmodule\tINTERNAL\t\tMAC-SAMI//\t\tMAC-SAMI\t1\n\n#\tfrom\t\t\tto\t\t\tmodule\t\tcost\nalias\tARMSCII8//"..., 4096) = 4096 <0.000050>
+7940  01:16:11.198627 read(4, "112//\t\tINTERNAL\t\tIBM1112\t\t1\nmodule\tINTERNAL\t\tIBM1112//\t\tIBM1112\t\t1\n\n#\tfrom\t\t\tto\t\t\tmodule\t\tcost\nalias\tIBM-1123//\t\tIBM1123//\nalias"..., 4096) = 4096 <0.000056>
+7940  01:16:11.199919 read(4, "s\tCP9448//\t\tIBM9448//\nalias\tCSIBM9448//\t\tIBM9448//\nmodule\tIBM9448//\t\tINTERNAL\t\tIBM9448\t\t1\nmodule\tINTERNAL\t\tIBM9448//\t\tIBM9448\t\t1"..., 4096) = 3105 <0.000054>
+7940  01:16:11.200897 read(4, "", 4096) = 0 <0.000039>
+7940  01:16:11.201060 close(4)          = 0 <0.000050>
+7940  01:16:11.203609 write(1, "\nWelcome to minicom 2.8\r\n", 25) = 25 <0.000087>
+7940  01:16:11.208486 write(1, "\nOPTIONS: I18n \r\n", 17) = 17 <0.000062>
+7940  01:16:11.208954 write(1, "Compiled on Jan  9 2021, 16:07:45.\r\n", 36) = 36 <0.000105>
+7940  01:16:11.209277 newfstatat(AT_FDCWD, "/dev/ttyUSB2", {st_mode=S_IFCHR|0660, st_rdev=makedev(0xbc, 0x2), ...}, 0) = 0 <0.000051>
+7940  01:16:11.209569 openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 4 <0.000077>
+7940  01:16:11.209772 fstat(4, {st_mode=S_IFREG|0644, st_size=1666, ...}) = 0 <0.000032>
+7940  01:16:11.209915 fstat(4, {st_mode=S_IFREG|0644, st_size=1666, ...}) = 0 <0.000030>
+7940  01:16:11.210151 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\7\0\0\0\7\0\0\0\0\0\0\0c\0\0\0\7\0\0\0\34\200\0\0\0\236\246,\200\237\272\371p\240\206\16\200\241\232\333p\312W\"\200\312\330Gp\313\210\376\200\322#\364p\322a\t\360\323u\363\0\324@\353\360\325U\325\0\326 \315\360\3275\267\0\330\0\257\360\331\25\231\0\331\340\221\360\332\376\265\200\333\300s\360\334\336\227\200"..., 4096) = 1666 <0.000052>
+7940  01:16:11.210329 lseek(4, -1043, SEEK_CUR) = 623 <0.000036>
+7940  01:16:11.210460 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\7\0\0\0\7\0\0\0\0\0\0\0c\0\0\0\7\0\0\0\34\377\377\377\377^\3\376\240\377\377\377\377\236\246,\200\377\377\377\377\237\272\371p\377\377\377\377\240\206\16\200\377\377\377\377\241\232\333p\377\377\377\377\312W\"\200\377\377\377\377\312\330Gp\377\377\377\377\313\210\376\200\377\377\377\377\322#\364p\377\377\377\377\322a\t\360\377\377\377\377"..., 4096) = 1043 <0.000036>
+7940  01:16:11.210626 close(4)          = 0 <0.000049>
+7940  01:16:11.210859 write(1, "Port /dev/ttyUSB2, 21:10:45\r\n", 29) = 29 <0.000075>
+7940  01:16:11.211121 write(1, "\nPress CTRL-A Z for help on special keys\r\n\n", 43) = 43 <0.000053>
+7940  01:16:11.211322 openat(AT_FDCWD, "/root/.dialdir", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000110>
+7940  01:16:11.211645 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B9600 opost isig icanon echo ...}) = 0 <0.000054>
+7940  01:16:11.211825 ioctl(0, TCGETS, {B9600 opost isig icanon echo ...}) = 0 <0.000030>
+7940  01:16:11.211955 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000034>
+7940  01:16:11.212091 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000034>
+7940  01:16:11.212237 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000031>
+7940  01:16:11.212371 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001136>
+7940  01:16:12.213761 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000056>
+7940  01:16:12.214130 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000058>
+7940  01:16:12.214354 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001155>
+7940  01:16:13.215783 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000051>
+7940  01:16:13.216110 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000053>
+7940  01:16:13.216322 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 0 (Timeout) <1.001136>
+7940  01:16:14.217721 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000055>
+7940  01:16:14.218134 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000057>
+7940  01:16:14.218354 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=667974354}) <0.332094>
+7940  01:16:14.550804 ioctl(0, KDGETLED, 0xffffe2ced198) = -1 ENOTTY (Inappropriate ioctl for device) <0.000050>
+7940  01:16:14.551065 read(0, "A", 32)  = 1 <0.000060>
+7940  01:16:14.551297 write(3, "A", 1)  = 1 <0.000097>
+7940  01:16:14.551539 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000082>
+7940  01:16:14.551797 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000048>
+7940  01:16:14.551995 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=801506043}) <0.198577>
+7940  01:16:14.750896 read(0, "T", 32)  = 1 <0.000061>
+7940  01:16:14.751175 write(3, "T", 1)  = 1 <0.000096>
+7940  01:16:14.751419 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000049>
+7940  01:16:14.751656 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000052>
+7940  01:16:14.751860 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=469422603}) <0.530651>
+7940  01:16:15.282810 read(0, "+", 32)  = 1 <0.000058>
+7940  01:16:15.283086 write(3, "+", 1)  = 1 <0.000087>
+7940  01:16:15.283319 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
+7940  01:16:15.283548 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
+7940  01:16:15.283746 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=285278632}) <0.714803>
+7940  01:16:15.998883 read(0, "C", 32)  = 1 <0.000060>
+7940  01:16:15.999170 write(3, "C", 1)  = 1 <0.000092>
+7940  01:16:15.999413 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
+7940  01:16:15.999643 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
+7940  01:16:15.999844 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=825395925}) <0.174675>
+7940  01:16:16.174813 read(0, "S", 32)  = 1 <0.000060>
+7940  01:16:16.175088 write(3, "S", 1)  = 1 <0.000088>
+7940  01:16:16.175323 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
+7940  01:16:16.175550 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
+7940  01:16:16.175749 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=849321849}) <0.150741>
+7940  01:16:16.326756 read(0, "C", 32)  = 1 <0.000056>
+7940  01:16:16.327006 write(3, "C", 1)  = 1 <0.000084>
+7940  01:16:16.327236 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000046>
+7940  01:16:16.327460 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
+7940  01:16:16.327659 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=857264963}) <0.142802>
+7940  01:16:16.470729 read(0, "S", 32)  = 1 <0.000057>
+7940  01:16:16.470991 write(3, "S", 1)  = 1 <0.000083>
+7940  01:16:16.471221 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
+7940  01:16:16.471445 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000048>
+7940  01:16:16.471643 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=481160787}) <0.518919>
+7940  01:16:16.990878 read(0, "?", 32)  = 1 <0.000060>
+7940  01:16:16.991153 write(3, "?", 1)  = 1 <0.000090>
+7940  01:16:16.991391 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000047>
+7940  01:16:16.991618 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000049>
+7940  01:16:16.991817 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [0], left {tv_sec=0, tv_nsec=705395497}) <0.294675>
+7940  01:16:17.286776 read(0, "\r", 32) = 1 <0.000060>
+7940  01:16:17.287050 write(3, "\r", 1) = 1 <0.000088>
+7940  01:16:17.287286 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000048>
+7940  01:16:17.287588 ioctl(3, TCGETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000052>
+7940  01:16:17.287790 pselect6(4, [0 3], NULL, NULL, {tv_sec=1, tv_nsec=0}, NULL) = 1 (in [3], left {tv_sec=0, tv_nsec=993687835}) <0.006380>
+7940  01:16:17.294383 read(3, 0xffffe2ced328, 127) = ? ERESTARTSYS (To be restarted if SA_RESTART is set) <17.739385>
+7940  01:16:35.034006 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=7948, si_uid=0} ---
+7940  01:16:35.034467 write(1, "\33[8;27H+---------------------------+\33[9;27H|                           |\33[10;27H|  Killed by signal 15 !    |\33[11;27H|          "..., 191) = 191 <0.000093>
+7940  01:16:35.034784 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=2, tv_nsec=0}, 0xffffe2cebd28) = 0 <2.000190>
+7940  01:16:37.035529 write(1, "\33[8;1HPress CTRL-A Z for help on special keys                \33[9;1H                                                       \33[10;1"..., 315) = 315 <0.000101>
+7940  01:16:37.036091 write(1, "\33[8;33H+---------------+\33[9;33H|               |\33[10;33H|  Hanging up   |\33[11;33H|               |\33[12;33H+---------------+\33[10;"..., 131) = 131 <0.000088>
+7940  01:16:37.036414 ioctl(3, TIOCMGET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.000080>
+7940  01:16:37.036758 openat(AT_FDCWD, "/root/minicom.log", O_WRONLY|O_CREAT|O_APPEND, 0666) = 4 <0.000123>
+7940  01:16:37.037073 lseek(4, 0, SEEK_END) = 70 <0.000046>
+7940  01:16:37.037261 newfstatat(AT_FDCWD, "/etc/localtime", {st_mode=S_IFREG|0644, st_size=1666, ...}, 0) = 0 <0.000062>
+7940  01:16:37.037515 fstat(4, {st_mode=S_IFREG|0644, st_size=70, ...}) = 0 <0.000048>
+7940  01:16:37.037777 write(4, "20210330 01:16:37 Hangup (0:00:00)\n", 35) = 35 <0.000086>
+7940  01:16:37.038010 close(4)          = 0 <0.000142>
+7940  01:16:37.038311 ioctl(3, TIOCMBIC, [TIOCM_DTR]) = 0 <0.002493>
+7940  01:16:37.040974 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0xffffe2cebdb8) = 0 <1.000165>
+7940  01:16:38.041419 ioctl(3, TIOCMBIS, [TIOCM_DTR]) = 0 <0.002408>
+7940  01:16:38.044311 write(1, "\33[8;1HPress CTRL-A Z for help on special keys          \33[9;1H                                                 \33[10;1H           "..., 285) = 285 <0.000084>
+7940  01:16:38.044617 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B9600 opost isig icanon echo ...}) = 0 <0.000074>
+7940  01:16:38.045107 write(1, "\33[H\33[2J\33[?1l\33>\33[m\33[?7h\33[4l\33>\0337\33[r\33[?1;3;4;6l\338", 46) = 46 <0.000067>
+7940  01:16:38.045342 ioctl(3, SNDCTL_TMR_START or TCSETS, {B9600 -opost -isig -icanon -echo ...}) = 0 <0.000108>
+7940  01:16:38.045617 ioctl(3, TIOCMSET, [TIOCM_DTR|TIOCM_RTS|TIOCM_CTS]) = 0 <0.001426>
+7940  01:16:38.047232 close(3)          = 0 <0.000084>
+7940  01:16:38.047460 unlinkat(AT_FDCWD, "/var/run/LCK..ttyUSB2", 0) = 0 <0.000246>
+7940  01:16:38.047883 write(2, "\n", 1) = 1 <0.000107>
+7940  01:16:38.048207 exit_group(1)     = ?
+7940  01:16:38.050465 +++ exited with 1 +++
