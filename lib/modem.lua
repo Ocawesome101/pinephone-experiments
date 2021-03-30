@@ -1,14 +1,17 @@
 -- AT command interface for the PinePhone modem
 
+-- Unfortunately we need a C library (lua-periphery) to do proper serial I/O.
+-- If possible I'd avoid it.
+local open = require("periphery").Serial
+
 local lib = {}
 local modem
 
 function lib.init(md)
-	modem = assert(io.open(md, "r+"))
+	modem = assert(open(md, 9600))
 	-- Configure the sent message validity period to about 3 days.  Also
 	-- configures to send as unicode (hexadecimal).
 	modem:write("AT+CSMP=17,167,0,0\n")
-	modem:flush()
 end
 
 local function chinit()
@@ -19,14 +22,12 @@ end
 
 function lib.read_message()
 	chinit()
-	modem:seek("set")
-	return modem:read()
+	return modem:read(64, 500)
 end
 
 function lib.send_command(cmd)
 	chinit()
-	modem:write(cmd, "\n")
-	modem:flush()
+	modem:write(cmd .. "\n")
 end
 
 -- SMS is currently implemented in text mode.  This is much simpler than PDU
@@ -46,11 +47,6 @@ function lib.send_sms(num, message_text)
 	-- Actually send the message.
 	lib.send_command("\26")
 	-- Read the serial number.
-	while true do
-		modem:seek("set")
-		local c = modem:read(1)
-		io.write(c)
-	end
 	local data
 	repeat
 		data = lib.read_message()
