@@ -82,11 +82,15 @@ function lib.set_pixel(x, y, color)
 	return true
 end
 
-function lib.fill_area(x, y, w, h, color)
+function lib.fill_area(x, y, fw, fh, color)
 	chinit()
 	local fbc = pack_color(unpack_color(color))
-	local towrite = string.rep(fbc, w)
-	for i=y, y+h-1, 1 do
+	if x + fw > w then
+		fw = fw - ((x + fw) - w)
+	end
+	if fw <= 0 then return true end
+	local towrite = string.rep(fbc, fw)
+	for i=y, y+fh-1, 1 do
 		lib.write_at(x, i, towrite)
 	end
 	return true
