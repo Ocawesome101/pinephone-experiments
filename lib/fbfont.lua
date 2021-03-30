@@ -37,9 +37,10 @@ end
 
 -- like draw_glyph, but takes a multi-character string
 function lib.write_at(x, y, str, color, scale)
+	scale = scale or 2
 	local jump = 10 * scale
 	for i=1, #str, 1 do
-		local dx = x + (jump * i)
+		local dx = x + (jump * i - jump)
 		lib.draw_glyph(dx, y, str:sub(i,i), color, scale)
 	end
 end

@@ -1,5 +1,8 @@
 -- touchscreen interface library: very basic
 
+-- Max gap before swipes are considered scrolling.
+local MAXGAP = 30
+
 -- This is a mapping of event codes to their names and possible codes.
 -- TODO: move this list to a separate library and expand it
 local events = {
@@ -63,9 +66,10 @@ local function get_event()
 	return data_pattern:unpack(data)
 end
 
--- Get a tap.
+-- Get a tap or scroll.
+local cx, cy = 0, 0
 function lib.pull_event()
-	local x, y = 0, 0
+	local x, y = cx, cy
 	while true do
 		-- Retrieve an event.
 		local et, ec, ev = get_event()
@@ -82,8 +86,10 @@ function lib.pull_event()
 			elseif ed.name == "EV_ABS" then
 				if cd == "ABS_MT_POSITION_X" or c == "ABS_X" then
 					x = ev
+					if cx == 0 then cx = x end
 				elseif cd == "ABS_MT_POSITION_Y" or c == "ABS_Y" then
 					y = ev
+					if cy == 0 then cy = y end
 				end
 			elseif ed.name == "EV_KEY" then
 				if cd == "BTN_TOUCH" and x ~= 0 and y ~= 0
@@ -91,8 +97,20 @@ function lib.pull_event()
 					-- This means the user removed their finger
 					-- and there isn't a "ghost tap" at [0,0]
 					-- so we can register a tap and return [x,y].
-					return x, y
+					cx, cy = 0, 0
+					return "drop", x, y
+				elseif cd == "BTN_TOUCH" and x ~= 0 and y ~= 0
+						and ev == 1 then
+					-- The user put their finger down.
+					return "touch", x, y
 				end
+			end
+			if (cx ~= 0 and cy ~= 0) and (x ~= 0 and y ~= 0) and
+				(cx - x > MAXGAP or cx - x < -MAXGAP or
+					cy - y > MAXGAP or cy - y < -MAXGAP) then
+				local dx, dy = -(cx - x), -(cy - y)
+				cx, cy = x, y
+				return "scroll", dx, dy
 			end
 		end
 	end

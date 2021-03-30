@@ -54,7 +54,7 @@ end
 function page:refresh(x,y)
 	fb.fill_area(self.x+x, self.y+y, self.w, self.h, self.bg)
 	for k, v in pairs(self.children) do
-		v:refresh(self.x+x, self.y=y)
+		v:refresh(self.x+x, self.y+y)
 	end
 end
 
@@ -72,12 +72,13 @@ function page:scroll(x, y, xd, yd)
 		if x >= v.x and x <= v.x+v.w and
 				y >= v.y and y <= v.y+v.h and v.sc then
 			v:scroll(xd, yd)
+		end
 	end
 end
 
 -- Views: Can be scrollable and any size
 local view = {}
-ui.view = {}
+ui.view = view
 
 function view.new(x, y, w, h, bg, sc)
 	return setmetatable({x=x,y=y,w=w,h=h,bg=bg,sc=sc,sx=0,sy=0,children={}},
@@ -85,6 +86,7 @@ function view.new(x, y, w, h, bg, sc)
 end
 
 function view:refresh(x, y)
+	print("S", self.sx, self.sy)
 	fb.fill_area(self.x+x,self.y+y, self.w, self.h, self.bg)
 	for k, v in pairs(self.children) do
 		-- TODO: better scroll checks?
@@ -135,12 +137,14 @@ local label = {}
 ui.label = label
 
 function label.new(x, y, w, h, text, fg, ts)
+	ts = ts or 2
 	return setmetatable({x=x,y=y,w=w,h=h,text=text,fg=fg,ts=ts},
 		{__index = label})
 end
 
 function label:refresh(x, y)
 	-- text wrapping
+	print("L", x, y)
 	-- TODO possibly move this to lib/fbfont or perhaps a text utils lib
 	local maxlen = self.w // (self.ts*10) -- assume char spacing of (2*scale)px
 	local lines, n = {}, 0
@@ -148,6 +152,7 @@ function label:refresh(x, y)
 	for c in self.text:gmatch(".") do
 		n = n + 1
 		if n > maxlen then
+			n = 1
 			lines[#lines + 1] = line
 			line = ""
 		end
@@ -155,7 +160,8 @@ function label:refresh(x, y)
 	end
 	if #line > 0 then lines[#lines + 1] = line end
 	for i=1, #lines, 1 do
-		text.write_at(self.x+x, self.y+y+(13*i-13), lines[i], self.fg, self.ts)
+		print(lines[i])
+		text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
 	end
 end
 
