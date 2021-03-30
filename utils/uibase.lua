@@ -34,7 +34,7 @@ back.image = img.load_image("images/back.bin")
 function home:tap()
 end
 
-local apps = ui.view.new(1, 1, UI_WIDTH, UI_HEIGHT - BH * UI_SCALE, 0xFF0000)
+local apps = ui.view.new(1, 1, UI_WIDTH, UI_HEIGHT - BH * UI_SCALE, 0x0000AA)
 
 local function draw_base_ui()
 	fb.fill_area(1, UI_HEIGHT - 36*UI_SCALE, UI_WIDTH, 36*UI_SCALE, 0x111111)
