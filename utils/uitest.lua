@@ -12,7 +12,7 @@ text.load_font("font/font.bin")
 local win = ui.window.new(1, 1, 1440, 720, 0)
 local page = ui.page.new(1, 1, 1440, 720, 0x00AAFF)
 local view = ui.view.new(1, 1, 1440, 720, 0x00FFAA, true)
-local label = ui.label.new(1, 1, 720, 720, "This is a very large, very extremely overly square label.  This text should wrap.", 0x0)
+local label = ui.label.new(1, 1, 720, 720, ("This is a very large, very extremely overly square label.  This text should wrap."):rep(10), 0x0)
 
 view.children[1] = label
 page.children[1] = view
@@ -28,9 +28,9 @@ while true do
 		sxs, sys = x, y
 	elseif t == "scroll" then
 		win:scroll(sxs, sys, x, y)
-		win:refresh()
 	elseif t == "drop" then
 		sxs, sys = 0, 0
 		win:tap(x, y)
+		win:refresh()
 	end
 end

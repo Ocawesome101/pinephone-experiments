@@ -29,7 +29,7 @@ end
 -- startX, startY, xDist, yDist, in that order
 function window:scroll(x, y, xd, yd)
 	if self.pages[self.current] then
-		self.pages[self.current]:scroll(x-self.x, y-self.y, xd, yd)
+		self.pages[self.current]:scroll(x-self.x, y-self.y, -xd, -yd)
 	end
 end
 
@@ -86,13 +86,13 @@ function view.new(x, y, w, h, bg, sc)
 end
 
 function view:refresh(x, y)
-	print("S", self.sx, self.sy)
+	--print("S", self.sx, self.sy)
 	fb.fill_area(self.x+x,self.y+y, self.w, self.h, self.bg)
 	for k, v in pairs(self.children) do
 		-- TODO: better scroll checks?
-		if v.y - self.sy > 0 and v.x - self.sx > 0 then
-			v:refresh(self.x+x-self.sx, self.y+y-self.sy)
-		end
+		--if v.y - self.sy > 0 and v.x - self.sx > 0 then
+			v:refresh(self.x+x, self.y+y-self.sy)
+		--end
 	end
 end
 
@@ -144,7 +144,7 @@ end
 
 function label:refresh(x, y)
 	-- text wrapping
-	print("L", x, y)
+	--print("L", x, y)
 	-- TODO possibly move this to lib/fbfont or perhaps a text utils lib
 	local maxlen = self.w // (self.ts*10) -- assume char spacing of (2*scale)px
 	local lines, n = {}, 0
@@ -160,7 +160,7 @@ function label:refresh(x, y)
 	end
 	if #line > 0 then lines[#lines + 1] = line end
 	for i=1, #lines, 1 do
-		print(lines[i])
+		--print(lines[i])
 		text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
 	end
 end

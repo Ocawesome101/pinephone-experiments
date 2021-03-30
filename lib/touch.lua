@@ -1,7 +1,7 @@
 -- touchscreen interface library: very basic
 
 -- Max gap before swipes are considered scrolling.
-local MAXGAP = 30
+local MAXGAP = 10
 
 -- This is a mapping of event codes to their names and possible codes.
 -- TODO: move this list to a separate library and expand it
