@@ -1,6 +1,7 @@
 -- User interface library.
 
 local fb = require("lib/framebuffer")
+local img = require("lib/fbimg")
 local text = require("lib/fbfont")
 local ui = {}
 
@@ -124,7 +125,12 @@ end
 
 function button:refresh(x, y)
 	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
-	text.write_at(x+self.x, y+self.y, self.text, self.fg, self.ts)
+	local xo, yo = self.xo or 0, self.yo or 0
+	if self.text then
+	  text.write_at(x+self.x+xo, y+self.y+yo, self.text, self.fg, self.ts)
+	elseif self.image then
+		img.draw_image(self.image, x+self.x+xo, y+self.y+yo, self.ts)
+	end
 end
 
 function button:tap()

@@ -8,6 +8,7 @@ UI_SCALE = 2
 
 local ui = require("lib/ui")
 local fb = require("lib/framebuffer")
+local img = require("lib/fbimg")
 local touch = require("lib/touch")
 local modem = require("lib/modem")
 local text = require("lib/fbfont")
@@ -17,17 +18,27 @@ touch.init("/dev/input/event1", UI_WIDTH, UI_HEIGHT)
 text.load_font("font/font.bin")
 
 local home = ui.button.new((UI_WIDTH//2) - 60*UI_SCALE, UI_HEIGHT - 36*UI_SCALE,
-  120*UI_SCALE, 36*UI_SCALE, "", 0x000000, 0x111111, UI_SCALE)
-local back = ui.button.new(1, UI_HEIGHT - 36*UI_SCALE, 120*UI_SCALE, 36*UI_SCALE, "", 0x000000, 0x111111, UI_SCALE)
+	120*UI_SCALE, 36*UI_SCALE, nil,
+	0x000000, 0x111111, UI_SCALE)
+home.image = img.load_image("images/home.bin")
+home.xo = (60 * UI_SCALE - (18 * UI_SCALE))
+local back = ui.button.new(1, UI_HEIGHT - 36*UI_SCALE,
+	120*UI_SCALE, 36*UI_SCALE, nil,
+	0x000000, 0x111111, UI_SCALE)
+back.image = img.load_image("images/back.bin")
 
 function home:tap()
 end
+
+local apps = ui.view.new()
 
 local function draw_base_ui()
 	fb.fill_area(1, UI_HEIGHT - 36*UI_SCALE, UI_WIDTH, 36*UI_SCALE, 0x111111)
   home:refresh(1, 1)
 	back:refresh(1, 1)
+	--apps:refresh(1, 1)
 end
+
 
 fb.fill_screen(0)
 draw_base_ui()
@@ -47,5 +58,19 @@ while true do
 			home:refresh(1,1)
 			home:tap()
 		end
+	elseif x >= back.x and x <= back.x + back.w
+			and y >= back.y and y <= back.y + back.h then
+		if e == "touch" then
+			back.bg = 0x555555
+			back:refresh(1,1)
+			back.down = true
+		elseif e == "drop" and back.down then
+			back.down = false
+			back.bg = 0x111111
+			back:refresh(1,1)
+			back:tap()
+		end
+	else
+		apps:tap(x, y)
 	end
 end

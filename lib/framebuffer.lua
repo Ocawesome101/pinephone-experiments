@@ -58,6 +58,7 @@ function lib.write_at(x, y, text)
 	  y = y - 1
 	end
 	local byte = (x * 4) + (y * (w + o) * 4) - 4
+	--local byte = ((x * 4) + (y * w * 4)) - 4
 	if fbcp ~= byte then
 		fbcp = framebuffer:seek("set", byte)
 	end
