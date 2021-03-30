@@ -12,6 +12,7 @@ function lib.init(md)
 	-- Configure the sent message validity period to about 3 days.  Also
 	-- configures to send as unicode (hexadecimal).
 	modem:write("AT+CSMP=17,167,0,0\r")
+	modem:write("AT+CPMS=\"MT\",,\"MT\"\r")
 	print(modem:read(1024, 500))
 end
 
@@ -54,6 +55,17 @@ function lib.send_sms(num, message_text)
 	local sn = tonumber(data:match("%d+"))
 	-- Return the serial number.
 	return sn
+end
+
+-- get indices of available SMS
+-- This pattern should match all the fields of a response header
+-- In order: Message index, message status, sender, nil, the time of message reception
+local sms_header_pattern = "%+CMGL: (%d+),(\"REC U?N?READ\"),\"%+(%d+)\",,\"(.+)\""
+function lib.poll_sms()
+	-- step 1: List all the available messages
+end
+
+function lib.pop_sms()
 end
 
 return lib
