@@ -5,7 +5,7 @@ local kbd = require("lib/vt_kbd")
 local buffer = {}
 local x, y = 1, 1
 local w, h = tonumber((...)), tonumber((select(2, ...)))
-local ccol = {}
+local ccol = {r=0,g=0,b=0}
 
 for i=1, h, 1 do
 	buffer[i] = {}
@@ -15,29 +15,71 @@ for i=1, h, 1 do
 end
 
 local function redraw()
+	for i=1, #buffer, 1 do
+		io.write("\27[", tostring(i + 3), ";1H\27[39;49m", tostring(i))
+	end
+
+	local rows = {"   ", "   ", "   "}
+	for i=1, w, 1 do
+		local row = 1
+		local n = tostring(i)
+		for c in n:gmatch(".") do
+			rows[row] = rows[row] .. " " .. c
+			row = row + 1
+		end
+		if row < #rows then
+			for i=row, #rows, 1 do
+				rows[row] = rows[row] .. " "
+			end
+		end
+	end
+
+	for i=1, #rows, 1 do
+		io.write("\27[", tostring(i), ";1H\27[39;49m", rows[i])
+	end
+
 	for line=1, #buffer, 1 do
 		local ln = buffer[line]
 		for col=1, #ln, 1 do
 			local ch = ln[col]
 			io.write(string.format("\27[%d;%dH\27[48;2;%d;%d;%dm  ",
-			  col, line, ch.r, ch.g, ch.b))
+			 line+3, col*2+3, ch.r, ch.g, ch.b))
 		end
 	end
 	local cc = buffer[y][x]
-	io.write(string.format("\27[%d;%dH\27[38;2;%d;%d;%dm[]",
-		y, x, 255 - cc.r, 255 - cc.g, 255 - cc.b))
+	io.write(string.format("\27[%d;%dH\27[38;2;%d;%d;%d;48;2;%d;%d;%dm[]",
+		y+3, x*2+3, 255 - cc.r, 255 - cc.g, 255 - cc.b, cc.r, cc.g, cc.b))
 	
 	io.write(string.format("\27[%d;1H\27[39;49mCurrent: \27[48;2;%d;%d;%dm  ",
-	  h + 2, ccol.r, ccol.g, ccol.b))
+	  h + 5, ccol.r, ccol.g, ccol.b))
 end
 
+io.write("\27[49m\27[2J")
 os.execute("stty raw -echo")
 while true do
 	redraw()
 	local key = kbd.get_key()
 	if key == "e" then
+		io.write("\27[39;49m\27[2J")
 		os.execute("stty sane")
 		os.exit()
+	elseif key == "c" then
+		os.execute("stty sane")
+		io.write(string.format("\27[%d;1H\27[39;49mEnter color (0xRRGGBB): ", h + 4))
+		local ent = io.read()
+		io.write("\27[A\27[2K")
+		local rr, rg, rb = ent:match("0x([0-9A-Fa-f][0-9A-Fa-f])([0-9A-Fa-f][0-9A-Fa-f])([0-9A-Fa-f][0-9A-Fa-f])")
+		if rr and rg and rb then
+			ccol.r = tonumber(rr, 16) or 0
+			ccol.g = tonumber(rg, 16) or 0
+			ccol.b = tonumber(rb, 16) or 0
+		end
+		os.execute("stty raw -echo")
+	elseif key == " " then
+		local ch = buffer[y][x]
+		ch.r = ccol.r or 0
+		ch.g = ccol.g or 0
+		ch.b = ccol.b or 0
 	elseif key == "up" then
 		y = math.max(1, y - 1)
 	elseif key == "down" then
