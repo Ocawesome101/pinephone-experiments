@@ -60,7 +60,7 @@ while true do
 	redraw()
 	local key = kbd.get_key()
 	if key == "e" then
-		io.write("\27[39;49m\27[2J")
+		io.write("\27[39;49m\27[2J\27[1;1H")
 		os.execute("stty sane")
 		os.exit()
 	elseif key == "c" then
@@ -75,6 +75,71 @@ while true do
 			ccol.b = tonumber(rb, 16) or 0
 		end
 		os.execute("stty raw -echo")
+	elseif key == "s" then
+		os.execute("stty sane")
+		io.write(string.format("\27[%d;1H\27[39;49mFilename: ", h + 4))
+		local name = io.read()
+		io.write("\27[A\27[2K")
+		if name == "" or name == "\n" then
+			print("not saving")
+		else
+			local handle, err = io.open(name, "w")
+			if not handle then
+				print(err)
+			else
+				for y=1, h, 1 do
+					for x=1, w, 1 do
+						local ch = buffer[y][x]
+						--print(ch.r,ch.g,ch.b)
+						handle:write(string.format("%s%s%s\0", string.char(ch.b), string.char(ch.g), string.char(ch.r)))
+					end
+					handle:write("\n")
+				end
+				handle:close()
+			end
+		end
+		os.execute("stty raw -echo")
+	elseif key == "l" then
+		os.execute("stty sane")
+    io.write(string.format("\27[%d;1H\27[39;49mFilename: ", h + 4))
+    local name = io.read()
+    io.write("\27[A\27[2K")
+    if name == "" or name == "\n" then
+      print("not loading")
+    else
+      local handle, err = io.open(name, "r")
+      if not handle then
+        print(err)
+      else
+				h = 0
+				w = 0
+				x = 1
+				y = 1
+				buffer = {}
+				local f = {"g","b","r"}
+				local i = 0
+				for line in handle:lines() do
+					buffer[#buffer + 1] = {}
+					w = #line / 4
+					h = h + 1
+					local ch = {}
+					i = 0
+					for byte in line:gmatch(".") do
+						i = i + 1
+						if i == 4 then
+							buffer[#buffer][#buffer[#buffer] + 1] = ch
+							i = 0
+							ch = {}
+						else
+							ch[f[i]] = byte:byte()
+						end
+					end
+				end
+				handle:close()
+      end
+    end
+		io.write("\27[39;49m\27[2J")
+    os.execute("stty raw -echo")
 	elseif key == " " then
 		local ch = buffer[y][x]
 		ch.r = ccol.r or 0
