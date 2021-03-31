@@ -36,6 +36,9 @@ end
 -- imagery if used properly.
 function lib.pack_line(...)
 	local args = {...}
+	if type(args[1]) == "table" then
+		args = args[1]
+	end
 	local ret = ""
 	for i=1, #args, 1 do
 		ret = string.format("%s%s", ret, pack_color(unpack_color(args[i])))
