@@ -32,12 +32,11 @@ function lib.send_command(cmd, ...)
 	  cmd = string.format(cmd, ...)
 	end
 	modem:write(cmd .. "\r")
-	print(cmd)
-	local resp = modem:read(math.huge, 500)
+	local resp = modem:read(math.huge, 5000)
+	--print(resp)
 	if resp:match("ERROR") then
 		return nil, resp
 	end
-	print(resp)
 	return resp
 end
 
@@ -51,6 +50,7 @@ function lib.send_sms(num, message_text)
 	lib.send_command("AT+CMGF=1")
 	local cmd = string.format("AT+CMGS=\"+%d\"", num)
 	-- Send the command.
+	print(cmd)
 	lib.send_command(cmd)
 	-- Send the message.
 	lib.send_command(message_text)

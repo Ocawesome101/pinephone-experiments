@@ -1,12 +1,13 @@
 -- Basic SMS app
 
 local ui = require("lib/ui")
+local text = require("lib/text")
 local notifications = require("lib/notifications")
 
 local function send_text(to, text)
 	local handle = io.open("/tmp/sent_texts", "a")
 		or io.open("/tmp/sent_texts", "r")
-	handle:write(string.format("TEXT(+%s,%s)", to, text))
+	handle:write(string.format("TEXT(+%s,%s)\n", to, text))
 	handle:close()
 end
 
@@ -61,7 +62,7 @@ local function create_conversation(k, v)
 	local view = ui.view.new(1, 1, wd, ht, 0x444444, true)
 	local off = 1
 	for i=1, #v, 1 do
-		local th = math.max(math.ceil((#v[i].text + 10) / wd), 1) * 17 * 2
+		local th = (#text.wrap(v[i].text,10,wd-8,UI_SCALE)) * 17 * 2
 		local text = ui.label.new(4, off, wd - 8, th,
 			v[i].from .. ": " .. v[i].text, 0xFFFFFF)
 		text.bg = 0x666666
@@ -85,7 +86,7 @@ local function create_conversation(k, v)
 		if #self.text > 0 then
 			send_text(k, self.text)
 			table.insert(conversations[k], {from = "me", text = self.text})
-			local th = math.max(math.ceil((#self.text + 10) / wd), 1) * 17 * 2
+			local th = (#text.wrap(self.text,10,wd-8,UI_SCALE)) * 17 * 2
     	local text = ui.label.new(4, off, wd - 8, th,
       	"me: " .. self.text, 0xFFFFFF)
     	text.bg = 0x666666
