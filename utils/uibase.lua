@@ -12,7 +12,10 @@ UI_SCALE = 2
 UI_APPS = {
 	{name = "Test",
 		icon = "images/testapp.bin",
-	  script = "apps/testapp.lua"}
+	  script = "apps/testapp.lua"},
+	{name = "Texts",
+		icon = "images/texts.bin",
+		script = "apps/texts.lua"},
 }
 UI_ICON_SCALE = UI_SCALE * 2
 
@@ -20,7 +23,6 @@ local ui = require("lib/ui")
 local fb = require("lib/framebuffer")
 local img = require("lib/fbimg")
 local touch = require("lib/touch")
-local modem = require("lib/modem")
 local text = require("lib/fbfont")
 
 fb.init("/dev/fb0", UI_WIDTH, UI_HEIGHT, true)
@@ -41,11 +43,16 @@ back.ixo = (60 * UI_SCALE - ((BH/2) * UI_SCALE))
 back.iyo = (4 * UI_SCALE)
 back.image = img.load_image("images/back.bin")
 
+local apps = ui.view.new(1, 1, UI_WIDTH, UI_HEIGHT - BH * UI_SCALE, 0x00AAFF)
 local app
 
 function home:tap()
 	if app and app.close then
 		app:close()
+		apps.draw = true
+		for k, v in pairs(apps.children) do
+			v.draw = true
+		end
 	end
 	app = nil
 end
@@ -54,13 +61,30 @@ function back:tap()
 	if app then
 		local last = app.pagestack[#app.pagestack]
 		if last then
+			app.pages[app.current].draw = true
+      for k, v in pairs(app.pages[app.current].children) do
+        v.draw = true
+        if v.children then
+          for K, V in pairs(v.children) do
+            V.draw = true
+          end
+        end
+      end
 			app.pagestack[#app.pagestack] = nil
 			app.current = last
+			app.pages[app.current].draw = true
+			for k, v in pairs(app.pages[app.current].children) do
+				v.draw = true
+				if v.children then
+					for K, V in pairs(v.children) do
+						V.draw = true
+					end
+				end
+			end
 		end
 	end
 end
 
-local apps = ui.view.new(1, 1, UI_WIDTH, UI_HEIGHT - BH * UI_SCALE, 0x00AAFF)
 
 local xof = 0
 local yof = 0
@@ -80,14 +104,16 @@ for i=1, #UI_APPS, 1 do
 	btn.image = assert(img.load_image(UI_APPS[i].icon))
 	btn.is = UI_ICON_SCALE
 
-	xof = xof + 40
+	xof = xof + 40 * UI_ICON_SCALE
 
 	apps.children[#apps.children + 1] = btn
 end
 
 local function draw_base_ui()
 	fb.fill_area(1, UI_HEIGHT - 36*UI_SCALE, UI_WIDTH, 36*UI_SCALE, 0x111111)
+	home.draw = true
   home:refresh(1, 1)
+	back.draw = true
 	back:refresh(1, 1)
 	if app and app.refresh then
 		app:refresh()
@@ -105,6 +131,7 @@ while true do
 			and y >= home.y and y <= home.y + home.h then
 		if e == "touch" then
 			home.bg = 0x555555
+			home.draw = true
 			home:refresh(1,1)
 			home.down = true
 		end
@@ -112,6 +139,7 @@ while true do
 			and y >= back.y and y <= back.y + back.h then
 		if e == "touch" then
 			back.bg = 0x555555
+			back.draw = true
 			back:refresh(1,1)
 			back.down = true
 		end

@@ -7,7 +7,7 @@ local tu = require("lib/text")
 local ui = {}
 
 -- Highest-level concept: Windows
-local window = {}
+local window = {draw = true}
 ui.window = window
 
 function window.new(x, y, w, h, bg)
@@ -16,7 +16,10 @@ function window.new(x, y, w, h, bg)
 end
 
 function window:refresh()
-	fb.fill_area(self.x, self.y, self.w, self.h, self.bg)
+	if self.draw then
+		fb.fill_area(self.x, self.y, self.w, self.h, self.bg)
+		self.draw = false
+	end
 	if self.pages[self.current] then
 		self.pages[self.current]:refresh(self.x,self.y)
 	end
@@ -45,7 +48,7 @@ function window:close()
 end
 
 -- Pages
-local page = {}
+local page = {draw = true}
 ui.page = page
 
 function page.new(x, y, w, h, bg)
@@ -54,7 +57,10 @@ function page.new(x, y, w, h, bg)
 end
 
 function page:refresh(x,y)
-	fb.fill_area(self.x+x, self.y+y, self.w, self.h, self.bg)
+	if self.draw then
+	  fb.fill_area(self.x+x, self.y+y, self.w, self.h, self.bg)
+		self.draw = false
+	end
 	for k, v in pairs(self.children) do
 		v:refresh(self.x+x, self.y+y)
 	end
@@ -74,12 +80,14 @@ function page:scroll(x, y, xd, yd)
 		if x >= v.x and x <= v.x+v.w and
 				y >= v.y and y <= v.y+v.h and v.sc then
 			v:scroll(xd, yd)
+			self.draw = true
+			for k, v in pairs(self.children) do v.draw = true end
 		end
 	end
 end
 
 -- Views: Can be scrollable and any size
-local view = {}
+local view = {draw = true}
 ui.view = view
 
 function view.new(x, y, w, h, bg, sc)
@@ -88,13 +96,15 @@ function view.new(x, y, w, h, bg, sc)
 end
 
 function view:refresh(x, y)
-	--print("S", self.sx, self.sy)
-	fb.fill_area(self.x+x,self.y+y, self.w, self.h, self.bg)
+	if self.draw then
+		fb.fill_area(self.x+x,self.y+y, self.w, self.h, self.bg)
+		self.draw = false
+	end
 	for k, v in pairs(self.children) do
 		-- TODO: better scroll checks?
-		--if v.y - self.sy > 0 and v.x - self.sx > 0 then
+		if v.y - self.sy >= 0 and v.y <= self.y + self.h then
 			v:refresh(self.x+x, self.y+y-self.sy)
-		--end
+		end
 	end
 end
 
@@ -111,11 +121,15 @@ function view:scroll(xd, yd)
 	if self.sc then
 		self.sx = self.sx + xd
 		self.sy = self.sy + yd
+		self.draw = true
+		for k,v in pairs(self.children) do
+			v.draw = true
+		end
 	end
 end
 
 -- Buttons, labels, textboxes
-local button = {}
+local button = {draw = true}
 ui.button = button
 
 function button.new(x, y, w, h, text, fg, bg, ts)
@@ -125,14 +139,17 @@ function button.new(x, y, w, h, text, fg, bg, ts)
 end
 
 function button:refresh(x, y)
-	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
-	local xo, yo = self.xo or 0, self.yo or 0
-	local ixo, iyo = self.ixo or 0, self.iyo or 0
-	if self.text then
-	  text.write_at(x+self.x+xo, y+self.y+yo, self.text, self.fg, self.ts)
-	end
-	if self.image then
-		img.draw_image(self.image, x+self.x+ixo, y+self.y+iyo, self.is or self.ts)
+	if self.draw then
+		fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
+		local xo, yo = self.xo or 0, self.yo or 0
+		local ixo, iyo = self.ixo or 0, self.iyo or 0
+		if self.text then
+		  text.write_at(x+self.x+xo, y+self.y+yo, self.text, self.fg, self.ts)
+		end
+		if self.image then
+			img.draw_image(self.image, x+self.x+ixo, y+self.y+iyo, self.is or self.ts)
+		end
+		self.draw = false
 	end
 end
 
@@ -142,7 +159,7 @@ end
 function button:scroll()
 end
 
-local label = {}
+local label = {draw = true}
 ui.label = label
 
 function label.new(x, y, w, h, text, fg, ts)
@@ -152,10 +169,16 @@ function label.new(x, y, w, h, text, fg, ts)
 end
 
 function label:refresh(x, y)
-	-- text wrapping
-	local lines = tu.wrap(self.text, 10, self.w, self.ts)
-	for i=1, #lines, 1 do
-		text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
+	if self.draw then
+		if self.bg then
+			fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
+		end
+		-- text wrapping
+		local lines = tu.wrap(self.text, 10, self.w, self.ts)
+		for i=1, #lines, 1 do
+			text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
+		end
+		self.draw = false
 	end
 end
 
@@ -170,14 +193,24 @@ end
 local textbox = {}
 ui.textbox = textbox
 
+-- Some constants.
+local KEY_HEIGHT = 80
+local KEY_WIDTH = 68
+local KEY_SPACING = 4
+local KEY_FG = 0x000000
+local KEY_BG = 0xAAAAAA
+local KB_HEIGHT = (KEY_HEIGHT * 4) + (KEY_SPACING * 2) + KEY_SPACING 
+
 -- internal keyboard object
-local _kb = {pages={}}
+local _kb = {pages={}, draw = true}
 
 function _kb:refresh(x, y)
+	local sd = self.draw
 	fb.fill_area(self.x, self.y, self.w, self.h, self.bg)
 	local buttons = self.pages[self.page or 1]
 	for i=1, #buttons, 1 do
-		buttons[i]:refresh(x, y - 320)--x+self.x, y+self.y)
+		buttons[i].draw = true
+		buttons[i]:refresh(x, self.y)--x+self.x, y+self.y)
 	end
 end
 
@@ -186,7 +219,6 @@ function _kb:tap(x, y)
 	y = y - self.y
 	for i=1, #buttons, 1 do
 		local b = buttons[i]
-		print(b.x, b.y, x, y)
 		if x >= b.x and x <= b.x+b.w and
 				y >= b.y and y <= b.y+b.h then
 			b:tap(self)
@@ -214,19 +246,19 @@ do
 			"qwertyuiop",
 			"Hasdfghjkl",
 			"SzxcvbnmD",
-			"NBB BR"
+			"N, .R"
 		},
 		{
 			"1234567890",
 			"-/:;()$&@\"",
-			"NH.H,H?H!H'HD",
-			"PBB BR"
+			"NH.H,H?H!H'D",
+			"PB BR"
 		},
 		{
 			"[]{}#%^*+=",
-			"_H\\H|H~H<H>",
+			"_H\\H|H~H<H>H`",
 			"PH.H,H?H!H'D",
-			"NBB BR"
+			"NB BR"
 		}
 	}
 
@@ -238,23 +270,27 @@ do
 			x = 1
 			for c in ln:gmatch(".") do
 				if c == "H" then
-					x = x + 36
+					x = x + ((KEY_WIDTH + KEY_SPACING) // 2)
 				elseif c == "B" then
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == "S" then
-					local bt = ui.button.new(x+4, y, 64, 72, "s", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y,
+						KEY_WIDTH, KEY_HEIGHT, "shf",
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
-						k.shifted = not not k.shifted
+						k.shifted = not k.shifted
 						if k.shifted then
-							self.text = "S"
+							self.text = "SHF"
 						else
-							self.text = "s"
+							self.text = "shf"
 						end
 					end
 					p[#p + 1] = bt
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == "N" then
-					local bt = ui.button.new(x+4, y, 64, 72, "N", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y,
+						KEY_WIDTH, KEY_HEIGHT, "Nxt",
+						KEY_FG, KEY_BG, UI_SCALE)
           function bt:tap(k)
 						if k.page == #k.pages then
 							k.page = 1
@@ -263,9 +299,11 @@ do
 						end
           end
           p[#p + 1] = bt
-          x = x + 72
+          x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == "P" then
-					local bt = ui.button.new(x+4, y, 64, 72, "P", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y, 
+						KEY_WIDTH, KEY_HEIGHT, "Prv",
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
 						if k.page == 1 then
 							k.page = #k.pages
@@ -274,51 +312,61 @@ do
 						end
 					end
 					p[#p + 1] = bt
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == "D" then
-					local bt = ui.button.new(x+4, y, 64, 72, "<", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y, 
+						((KEY_WIDTH*1.5)//1), KEY_HEIGHT, "Bksp",
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
 						k:key("backspace")
 					end
 					p[#p + 1] = bt
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == "R" then
-					local bt = ui.button.new(x+4, y, 64, 72, "]", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y, 
+						KEY_WIDTH*2+KEY_SPACING, KEY_HEIGHT, "Return",
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
 						k:key("return")
 					end
 					p[#p + 1] = bt
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				elseif c == " " then
-					local bt = ui.button.new(x, y, 72*5, 72, "", 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x, y,
+						(KEY_WIDTH+KEY_SPACING)*5, KEY_HEIGHT, "",
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
 						k:key(" ")
 					end
 					p[#p+1] = bt
-					x = x + (72*5)
+					x = x + (KEY_WIDTH+KEY_SPACING)*5
 				else
-					local bt = ui.button.new(x, y, 64, 72, c, 0, 0xAAAAAA, 2)
+					local bt = ui.button.new(x+KEY_SPACING//2, y, 
+						KEY_WIDTH, KEY_HEIGHT, c,
+						KEY_FG, KEY_BG, UI_SCALE)
 					function bt:tap(k)
-						k:key(c)
+						k:key(k.shifted and c:upper() or c)
 					end
 					p[#p + 1] = bt
-					x = x + 72
+					x = x + KEY_WIDTH + KEY_SPACING
 				end
 			end
-			y = y + 74
+			y = y + KEY_HEIGHT + (KEY_SPACING // 2)
 		end
 	end
 end
 
 -- TODO: y coordinate currently hardcoded
-function textbox.new(x, w, h, fg, bg)
+function textbox.new(x, y, w, h, fg, bg)
 	local new
+	local UI_HEIGHT = UI_HEIGHT or 1440
+	local UI_WIDTH = UI_WIDTH or 720
 	new = setmetatable({
 		kb = setmetatable({
 			x = 1,
-			y = 1440 - 320,
-			w = 720,
-			h = 320,
+			y = UI_HEIGHT - KB_HEIGHT - y,
+			w = UI_WIDTH,
+			h = KB_HEIGHT,
 			fg = 0,
 			bg = 0,
 			page = 1,
@@ -329,26 +377,39 @@ function textbox.new(x, w, h, fg, bg)
 			__index = _kb
 		}),
 		text = "",
+		shifted = "A",
 		fg = fg,
 		bg = bg,
 		x = x,
-		y = (1440 - 320) - h,
+		y = ((UI_HEIGHT - KB_HEIGHT) - h) - y,
 		w = w,
-		h = 320 + h
+		h = KB_HEIGHT + h
 	}, {__index = textbox})
 	return new
 end
 
 function textbox:refresh(x, y)
-	local lines = tu.wrap(self.text, 10, self.w, UI_SCALE)
+	local UI_SCALE = UI_SCALE or 2
+	local lines = tu.wrap(self.text.."|", 10, self.w - 8, UI_SCALE)
 	fb.fill_area(x + self.x, y + self.y, self.w, self.h, self.bg)
-	text.write_at(x + self.x + 4, y + self.y + 4, lines[#lines] or "", self.fg,
-		UI_SCALE)
+	for i = #lines - (self.h // (17*UI_SCALE)), #lines, 1 do
+		text.write_at(x + self.x + 4, y + self.y + ((17*i*UI_SCALE) - (17*UI_SCALE)) + 4, lines[i] or "", self.fg, UI_SCALE)
+	end
 	self.kb:refresh(x + self.x, y + self.y + self.h)
 end
 
 function textbox:key(k)
-	self.text = self.text .. k
+	if k == "backspace" then
+		if #self.text >= 1 then
+			self.text = self.text:sub(1, -2)
+		end
+	elseif k == "return" then
+		if self.submit then
+			self:submit()
+		end
+	else
+		self.text = self.text .. k
+	end
 end
 
 function textbox:tap(x, y)

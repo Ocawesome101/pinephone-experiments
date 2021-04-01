@@ -5,8 +5,8 @@ local fb = require("lib/framebuffer")
 local tch = require("lib/touch")
 local text = require("lib/fbfont")
 
-fb.init("/dev/fb0", 1440, 720, true)
-tch.init("/dev/input/event1", 1440, 720)
+fb.init("/dev/fb0", 720, 1440, true)
+tch.init("/dev/input/event1", 720, 1440)
 text.load_font("font/font.bin")
 
 local win = ui.window.new(1, 1, 1440, 720, 0)

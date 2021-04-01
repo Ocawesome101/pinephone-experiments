@@ -9,8 +9,7 @@ local modem
 
 function lib.init(md)
 	modem = assert(open(md, 115200))
-	-- Configure the sent message validity period to about 3 days.  Also
-	-- configures to send as unicode (hexadecimal).
+	-- Configure the sent message validity period to about 3 days.
 	modem:write("AT+CSMP=17,167,0,0\r")
 	modem:write("AT+CPMS=\"MT\",,\"MT\"\r")
 	print(modem:read(1024, 500))
@@ -117,6 +116,7 @@ function lib.poll_sms()
 			data = data .. v .. "\n"
 		end
 	end
+	return list
 end
 
 function lib.delete_sms(index)
