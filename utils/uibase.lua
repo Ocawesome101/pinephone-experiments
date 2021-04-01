@@ -90,7 +90,7 @@ local function draw_base_ui()
   home:refresh(1, 1)
 	back:refresh(1, 1)
 	if app and app.refresh then
-		app:refresh(1,1)
+		app:refresh()
 	else
 		apps:refresh(1, 1)
 	end
@@ -131,7 +131,6 @@ while true do
 	elseif e == "drop" then
 		if y <= UI_HEIGHT - BH * UI_SCALE then
 			if app and app.tap then
-				print("TAP ON APP")
 				app:tap(x,y)
 			else
 				apps:tap(x, y)
