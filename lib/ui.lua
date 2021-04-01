@@ -3,6 +3,7 @@
 local fb = require("lib/framebuffer")
 local img = require("lib/fbimg")
 local text = require("lib/fbfont")
+local tu = require("lib/text")
 local ui = {}
 
 -- Highest-level concept: Windows
@@ -152,23 +153,8 @@ end
 
 function label:refresh(x, y)
 	-- text wrapping
-	--print("L", x, y)
-	-- TODO possibly move this to lib/fbfont or perhaps a text utils lib
-	local maxlen = self.w // (self.ts*10) -- assume char spacing of (2*scale)px
-	local lines, n = {}, 0
-	local line = ""
-	for c in self.text:gmatch(".") do
-		n = n + 1
-		if n > maxlen then
-			n = 1
-			lines[#lines + 1] = line
-			line = ""
-		end
-		line = line .. c
-	end
-	if #line > 0 then lines[#lines + 1] = line end
+	local lines = tu.wrap(self.text, 10, self.w, self.ts)
 	for i=1, #lines, 1 do
-		--print(lines[i])
 		text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
 	end
 end
@@ -179,8 +165,166 @@ end
 function label:scroll()
 end
 
+-- Textbox: textbox with a keyboard attached.
+-- TODO: make the keyboard optional.
 local textbox = {}
 ui.textbox = textbox
--- TODO: textbox element
+
+-- internal keyboard object
+local _kb = {pages={}}
+
+function _kb:refresh(x, y)
+	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
+	local buttons = self.pages[self.page or 1]
+	for i=1, #buttons, 1 do
+		buttons[i]:refresh(x+self.x, y+self.y)
+	end
+end
+
+function _kb:tap(x, y)
+	local buttons = self.pages[self.page or 1]
+	for i=1, #buttons, 1 do
+		local b = buttons[i]
+		if x >= b.x and x <= b.x+b.w and
+				y >= b.y and y <= b.y+b.h then
+			b:tap(self)
+			return
+		end
+	end
+end
+
+function _kb:key()
+end
+
+-- TODO: localization support
+-- for now the keyboard is QWERTY only
+do
+	local pages = {
+		{
+			-- B: Blank space
+			-- H: half-key offset
+			-- S: Shift
+			-- N: Next page
+			-- P: Previous page
+			-- D: Backspace
+			-- R: Return/enter
+			-- ' ': Space bar (5 buttons wide)
+			"qwertyuiop",
+			"Hasdfghjkl",
+			"SzxcvbnmD",
+			"NBB BR"
+		},
+		{
+			"1234567890",
+			"-/:;()$&@\"",
+			"NH.H,H?H!H'HD",
+			"PBB BR"
+		},
+		{
+			"[]{}#%^*+=",
+			"_H\\H|H~H<H>",
+			"PH.H,H?H!H'D",
+			"NBB BR"
+		}
+	}
+
+	for i, l in ipairs(pages) do
+		local p = {}
+		_kb.pages[i] = p
+		local x, y = 1, 1
+		for _, ln in ipairs(l) do
+			for c in ln:gmatch(".") do
+				if c == "H" then
+					x = x + 36
+				elseif c == "B" then
+					x = x + 72
+				elseif c == "S" then
+					local bt = ui.button.new(x+4, y, 64, 72, "s", 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						k.shifted = not not k.shifted
+						if k.shifted then
+							self.text = "S"
+						else
+							self.text = "s"
+						end
+					end
+					p[#p + 1] = bt
+					x = x + 72
+				elseif c == "N" then
+					local bt = ui.button.new(x+4, y, 64, 72, "N", 0, 0xAAAAAA, 2)
+          function bt:tap(k)
+						if k.page == #k.pages then
+							k.page = 1
+						else
+							k.page = k.page + 1
+						end
+          end
+          p[#p + 1] = bt
+          x = x + 72
+				elseif c == "P" then
+					local bt = ui.button.new(x+4, y, 64, 72, "P", 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						if k.page == 1 then
+							k.page = #k.pages
+						else
+							k.page = k.page - 1
+						end
+					end
+					p[#p + 1] = bt
+					x = x + 72
+				elseif c == "D" then
+					local bt = ui.button.new(x+4, y, 64, 72, "<", 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						k:key("backspace")
+					end
+					p[#p + 1] = bt
+					x = x + 72
+				elseif c == "R" then
+					local bt = ui.button.new(x+4, y, 64, 72, "]", 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						k:key("return")
+					end
+					p[#p + 1] = bt
+					x = x + 72
+				elseif c == " " then
+					local bt = ui.button.new(x, y, 72*5, 72, "", 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						k:key(" ")
+					end
+					p[#p+1] = bt
+					x = x + (72*5)
+				else
+					local bt = ui.button.new(x, y, 64, 72, c, 0, 0xAAAAAA, 2)
+					function bt:tap(k)
+						k:key(c)
+					end
+					p[#p + 1] = bt
+					x = x + 72
+				end
+			end
+			y = y + 72
+		end
+	end
+end
+
+-- TODO: y coordinate currently hardcoded
+function textbox.new(x, w, h, fg, bg)
+	return setmetatable({
+		kb = setmetatable({}, {
+			__index = _kb
+		}),
+		text = "",
+		fg = fg,
+		bg = bg,
+		x = x,
+		y = 720 - h,
+		w = w,
+		h = h
+	})
+end
+
+function textbox:refresh(x, y)
+	self.kb:refresh(x + self.x, y + self.y)
+end
 
 return ui

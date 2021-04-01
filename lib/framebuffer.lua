@@ -93,6 +93,11 @@ function lib.fill_area(x, y, fw, fh, color)
 		fw = fw - ((x + fw) - w)
 	end
 	if fw <= 0 then return true end
+	if fw >= w then
+		local towrite = string.rep(fbc, w*fh)
+		lib.write_at(x, y, towrite)
+		return true
+	end
 	local towrite = string.rep(fbc, fw)
 	for i=y, y+fh-1, 1 do
 		lib.write_at(x, i, towrite)
