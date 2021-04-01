@@ -174,17 +174,19 @@ ui.textbox = textbox
 local _kb = {pages={}}
 
 function _kb:refresh(x, y)
-	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
+	fb.fill_area(self.x, self.y, self.w, self.h, self.bg)
 	local buttons = self.pages[self.page or 1]
 	for i=1, #buttons, 1 do
-		buttons[i]:refresh(x+self.x, y+self.y)
+		buttons[i]:refresh(x, y - 320)--x+self.x, y+self.y)
 	end
 end
 
 function _kb:tap(x, y)
 	local buttons = self.pages[self.page or 1]
+	y = y - self.y
 	for i=1, #buttons, 1 do
 		local b = buttons[i]
+		print(b.x, b.y, x, y)
 		if x >= b.x and x <= b.x+b.w and
 				y >= b.y and y <= b.y+b.h then
 			b:tap(self)
@@ -233,6 +235,7 @@ do
 		_kb.pages[i] = p
 		local x, y = 1, 1
 		for _, ln in ipairs(l) do
+			x = 1
 			for c in ln:gmatch(".") do
 				if c == "H" then
 					x = x + 36
@@ -302,29 +305,54 @@ do
 					x = x + 72
 				end
 			end
-			y = y + 72
+			y = y + 74
 		end
 	end
 end
 
 -- TODO: y coordinate currently hardcoded
 function textbox.new(x, w, h, fg, bg)
-	return setmetatable({
-		kb = setmetatable({}, {
+	local new
+	new = setmetatable({
+		kb = setmetatable({
+			x = 1,
+			y = 1440 - 320,
+			w = 720,
+			h = 320,
+			fg = 0,
+			bg = 0,
+			page = 1,
+			key = function(_, k)
+				new:key(k)
+			end
+		}, {
 			__index = _kb
 		}),
 		text = "",
 		fg = fg,
 		bg = bg,
 		x = x,
-		y = 720 - h,
+		y = (1440 - 320) - h,
 		w = w,
-		h = h
-	})
+		h = 320 + h
+	}, {__index = textbox})
+	return new
 end
 
 function textbox:refresh(x, y)
-	self.kb:refresh(x + self.x, y + self.y)
+	local lines = tu.wrap(self.text, 10, self.w, UI_SCALE)
+	fb.fill_area(x + self.x, y + self.y, self.w, self.h, self.bg)
+	text.write_at(x + self.x + 4, y + self.y + 4, lines[#lines] or "", self.fg,
+		UI_SCALE)
+	self.kb:refresh(x + self.x, y + self.y + self.h)
+end
+
+function textbox:key(k)
+	self.text = self.text .. k
+end
+
+function textbox:tap(x, y)
+	self.kb:tap(x, y)
 end
 
 return ui
