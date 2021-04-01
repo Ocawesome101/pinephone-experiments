@@ -99,9 +99,9 @@ end
 
 function view:tap(x, y)
 	for k, v in pairs(self.children) do
-		if x >= self.x and x <= self.x+self.w
-				and y >= self.y and y <= self.y+self.h then
-			v:tap(x-self.x, y-self.y)
+		if x >= self.x+v.x and x <= self.x+v.x+v.w
+				and y >= self.y+v.y and y <= self.y+v.h+v.h then
+			v:tap(x-self.x+v.x, y-self.y+v.y)
 		end
 	end
 end
@@ -126,10 +126,12 @@ end
 function button:refresh(x, y)
 	fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
 	local xo, yo = self.xo or 0, self.yo or 0
+	local ixo, iyo = self.ixo or 0, self.iyo or 0
 	if self.text then
 	  text.write_at(x+self.x+xo, y+self.y+yo, self.text, self.fg, self.ts)
-	elseif self.image then
-		img.draw_image(self.image, x+self.x+xo, y+self.y+yo, self.ts)
+	end
+	if self.image then
+		img.draw_image(self.image, x+self.x+ixo, y+self.y+iyo, self.is or self.ts)
 	end
 end
 

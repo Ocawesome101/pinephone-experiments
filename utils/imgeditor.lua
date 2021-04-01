@@ -140,6 +140,22 @@ while true do
     end
 		io.write("\27[39;49m\27[2J")
     os.execute("stty raw -echo")
+	elseif key == "f" then
+		os.execute("stty sane")
+		io.write(string.format("\27[%d;1H\27[39;49mEnter dimensions (widthxheight): ", h + 4))
+		local ent = io.read()
+		io.write("\27[A\27[2K")
+		local wd, hd = ent:match("(%d+)[x%*](%d+)")
+		wd, hd = tonumber(wd) or 1, tonumber(hd) or 1
+		for x=x, x+wd-1, 1 do
+			for y=y, y+hd-1, 1 do
+				local ch = buffer[y][x]
+				ch.r = ccol.r
+				ch.g = ccol.g
+				ch.b = ccol.b
+			end
+		end
+		os.execute("stty raw -echo")
 	elseif key == " " then
 		local ch = buffer[y][x]
 		ch.r = ccol.r or 0
