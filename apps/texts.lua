@@ -72,17 +72,18 @@ local function create_conversation(k, v)
 	view.wy = off - ht
 	local page = #window.pages + 1
 	window.pages[#window.pages + 1] = cpage
-	local button = ui.button.new(1, (cn * 89), wd, 88,
-		tostring(k), 0xFFFFFF, 0x555555, UI_SCALE)
+	local button = ui.button.new(1, (cn * 90), wd, 88,
+		"+"..tostring(k), 0xFFFFFF, 0x555555, UI_SCALE)
 	main_view.children[#main_view.children + 1] = button
 	function button:tap()
 		window.pagestack[#window.pagestack + 1] = window.current
 		window.current = page
+		cpage.draw = true
 	end
 	local tbox = ui.textbox.new(1, 88, wd, 88, 0x000000, 0xDDDDDD)
 	function tbox:submit()
 		if #self.text > 0 then
-			send_text(self.text)
+			send_text(k, self.text)
 			table.insert(conversations[k], {from = "me", text = self.text})
 			local th = math.max(math.ceil((#self.text + 10) / wd), 1) * 17 * 2
     	local text = ui.label.new(4, off, wd - 8, th,

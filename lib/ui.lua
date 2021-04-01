@@ -103,7 +103,7 @@ function view:refresh(x, y)
 	for k, v in pairs(self.children) do
 		-- TODO: better scroll checks?
 		if v.y - self.sy >= 0 and v.y <= self.y + self.h then
-			v:refresh(self.x+x, self.y+y-self.sy)
+			v:refresh(self.x+x, self.y+y-self.sy, -self.sy)
 		end
 	end
 end
@@ -111,7 +111,7 @@ end
 function view:tap(x, y)
 	for k, v in pairs(self.children) do
 		if x >= self.x+v.x and x <= self.x+v.x+v.w
-				and y >= self.y+v.y and y <= self.y+v.h+v.h then
+				and y >= self.y+v.y and y <= self.y+v.y+v.h then
 			v:tap(x-self.x+v.x, y-self.y+v.y)
 		end
 	end
@@ -168,7 +168,7 @@ function label.new(x, y, w, h, text, fg, ts)
 		{__index = label})
 end
 
-function label:refresh(x, y)
+function label:refresh(x, y, s)
 	if self.draw then
 		if self.bg then
 			fb.fill_area(x+self.x, y+self.y, self.w, self.h, self.bg)
@@ -176,7 +176,11 @@ function label:refresh(x, y)
 		-- text wrapping
 		local lines = tu.wrap(self.text, 10, self.w, self.ts)
 		for i=1, #lines, 1 do
-			text.write_at(self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts)), lines[i], self.fg, self.ts)
+			local dx, dy = self.x+x, self.y+y+((17*self.ts)*i-(17*self.ts))
+			if dy + 17*self.ts > self.y+y+self.h - (s or 0) then
+				break
+			end
+			text.write_at(dx, dy, lines[i], self.fg, self.ts)
 		end
 		self.draw = false
 	end
