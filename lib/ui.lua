@@ -199,8 +199,8 @@ ui.textbox = textbox
 
 -- Some constants.
 local KEY_HEIGHT = 80
-local KEY_WIDTH = 68
-local KEY_SPACING = 4
+local KEY_WIDTH = 70
+local KEY_SPACING = 2
 local KEY_FG = 0x000000
 local KEY_BG = 0xAAAAAA
 local KB_HEIGHT = (KEY_HEIGHT * 4) + (KEY_SPACING * 2) + KEY_SPACING 
@@ -288,6 +288,7 @@ do
 						else
 							self.text = "shf"
 						end
+						k.draw = true
 					end
 					p[#p + 1] = bt
 					x = x + KEY_WIDTH + KEY_SPACING
@@ -301,6 +302,7 @@ do
 						else
 							k.page = k.page + 1
 						end
+						k.draw = true
           end
           p[#p + 1] = bt
           x = x + KEY_WIDTH + KEY_SPACING
@@ -314,6 +316,7 @@ do
 						else
 							k.page = k.page - 1
 						end
+						k.draw = true
 					end
 					p[#p + 1] = bt
 					x = x + KEY_WIDTH + KEY_SPACING
@@ -357,9 +360,16 @@ do
 			end
 			y = y + KEY_HEIGHT + (KEY_SPACING // 2)
 		end
+		local UI_SCALE = UI_SCALE or 2
+		for i=1, #p, 1 do
+			local b = p[i]
+			b.xo = b.w // 2 - ((#b.text * 10 * UI_SCALE) // 2)
+			b.yo = b.h // 2 - ((17 * UI_SCALE) // 2)
+		end
 	end
 end
 
+textbox.draw = true
 -- TODO: y coordinate currently hardcoded
 function textbox.new(x, y, w, h, fg, bg)
 	local new
@@ -387,6 +397,7 @@ function textbox.new(x, y, w, h, fg, bg)
 		x = x,
 		y = ((UI_HEIGHT - KB_HEIGHT) - h) - y,
 		w = w,
+		rh = h,
 		h = KB_HEIGHT + h
 	}, {__index = textbox})
 	return new
@@ -395,11 +406,14 @@ end
 function textbox:refresh(x, y)
 	local UI_SCALE = UI_SCALE or 2
 	local lines = tu.wrap(self.text.."|", 10, self.w - 8, UI_SCALE)
-	fb.fill_area(x + self.x, y + self.y, self.w, self.h, self.bg)
+	fb.fill_area(x + self.x, y + self.y, self.w, self.rh, self.bg)
 	for i = #lines - (self.h // (17*UI_SCALE)), #lines, 1 do
 		text.write_at(x + self.x + 4, y + self.y + ((17*i*UI_SCALE) - (17*UI_SCALE)) + 4, lines[i] or "", self.fg, UI_SCALE)
 	end
-	self.kb:refresh(x + self.x, y + self.y + self.h)
+	if self.kb.draw then
+		self.kb:refresh(x + self.x, y + self.y + self.h)
+		self.kb.draw = false
+	end
 end
 
 function textbox:key(k)

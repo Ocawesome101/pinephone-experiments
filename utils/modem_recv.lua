@@ -6,7 +6,7 @@ md.init("/dev/ttyUSB2")
 
 local list = md.poll_sms()
 
-if not list then
+if not list or #list == 0 then
 	print("No messages in queue.")
 	return
 end

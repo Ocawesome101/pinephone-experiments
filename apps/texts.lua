@@ -1,4 +1,6 @@
 -- Basic SMS app
+-- The code for this is fairly awful and hacked together.  I might rewrite it
+-- later.
 
 local ui = require("lib/ui")
 local text = require("lib/text")
@@ -54,12 +56,13 @@ end
 
 local main_page = ui.page.new(1, 1, wd, ht, 0x444444)
 local main_view = ui.view.new(1, 1, wd, ht, 0x444444)
+main_view.children[1] = ui.label.new(1, 1, wd, 88, "SMS", 0, 6)
 main_page.children[1] = main_view
 window.pages[1] = main_page
 local cn = 1
 local function create_conversation(k, v)
 	local cpage = ui.page.new(1, 1, wd, ht, 0x444444)
-	local view = ui.view.new(1, 1, wd, ht, 0x444444, true)
+	local view = ui.view.new(1, 1, wd, 944, 0x444444, true)
 	local off = 1
 	for i=1, #v, 1 do
 		local th = (#text.wrap(v[i].text,10,wd-8,UI_SCALE)) * 17 * 2
@@ -70,7 +73,7 @@ local function create_conversation(k, v)
 		off = off + th + 10
 	end
 	cpage.children[1] = view
-	view.wy = off - ht
+	view.sy = math.min(0, -off + ht)
 	local page = #window.pages + 1
 	window.pages[#window.pages + 1] = cpage
 	local button = ui.button.new(1, (cn * 90), wd, 88,
@@ -80,6 +83,10 @@ local function create_conversation(k, v)
 		window.pagestack[#window.pagestack + 1] = window.current
 		window.current = page
 		cpage.draw = true
+		cpage.children[#cpage.children].kb.draw = true
+		if self.text:sub(-1, -1) == "*" then
+			self.text = self.text:sub(1, -2)
+		end
 	end
 	local tbox = ui.textbox.new(1, 88, wd, 88, 0x000000, 0xDDDDDD)
 	function tbox:submit()
@@ -95,6 +102,7 @@ local function create_conversation(k, v)
 		end
 		self.text = ""
 	end
+	cpage.off = off
 	cpage.children[#cpage.children + 1] = tbox
 	cn = cn + 1
 end
@@ -125,6 +133,53 @@ window.pages[nc_page_n] = nc_page
 function new:tap()
 	window.pagestack[#window.pagestack + 1] = window.current
 	window.current = nc_page_n
+	for k, v in pairs(window.pages[window.current].children) do
+		if v.kb then v.kb.draw = true end
+	end
+end
+
+local rf = window.refresh
+function window:refresh()
+	local text_wrap = text.wrap
+	local notifs = notifications.recv(true)
+	if #notifs > 1 then print(notifs) end
+	for notif in notifs:gmatch("TEXT%((.-)%)\n") do
+		print(notif)
+		local from, time, text = notif:match("^%+(%d+),(.-),(.+)$")
+		print(from)
+		from = tonumber(from)
+		if not conversations[from] then
+			conversations[from] = {{from = tostring(from), text = text}}
+			create_conversation(from, conversations[from])
+			for i, c in pairs(window.pages[1].children[1].children) do
+				if c.text == tostring(from) then
+					c.text = c.text == "*"
+				end
+			end
+		else
+			table.insert(conversations[from], {
+				from = tostring(from),
+				text = text
+			})
+			for i, c in pairs(window.pages[1].children[1].children) do
+        if c.text == tostring(from) then
+					c:tap()
+          c.text = c.text == "*"
+					break
+        end
+      end
+			local conv = window.pages[window.current]
+			local th = (#text_wrap(text,10,wd-8,UI_SCALE)) * 17 * 2
+			local ty = conv.children[1].children[#conv.children[1].children].y + th + 20
+      local text = ui.label.new(4, y, wd - 8, th,
+        "me: " .. text, 0xFFFFFF)
+      text.bg = 0x666666
+      conv.children[1].children[#conv.children[1].children + 1] = text
+			window.current = window.pagestack[#window.pagestack]
+			window.pagestack[#window.pagestack] = nil
+		end
+	end
+	rf(window)
 end
 
 function window:close()

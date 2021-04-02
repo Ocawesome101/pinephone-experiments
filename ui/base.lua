@@ -90,7 +90,7 @@ local xof = 0
 local yof = 0
 for i=1, #UI_APPS, 1 do
 	local btn = ui.button.new(
-		16 + xof, 16 + yof,
+		48 + xof, 48 + yof,
 		32 * UI_ICON_SCALE, 32 * UI_ICON_SCALE + 16 * UI_SCALE,
 		UI_APPS[i].name,
 		0xFFFFFF, 0x00AAFF,
@@ -104,7 +104,7 @@ for i=1, #UI_APPS, 1 do
 	btn.image = assert(img.load_image(UI_APPS[i].icon))
 	btn.is = UI_ICON_SCALE
 
-	xof = xof + 40 * UI_ICON_SCALE
+	xof = xof + 48 * UI_ICON_SCALE
 
 	apps.children[#apps.children + 1] = btn
 end

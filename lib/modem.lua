@@ -32,7 +32,7 @@ function lib.send_command(cmd, ...)
 	  cmd = string.format(cmd, ...)
 	end
 	modem:write(cmd .. "\r")
-	local resp = modem:read(math.huge, 5000)
+	local resp = modem:read(8192, 2000)
 	--print(resp)
 	if resp:match("ERROR") then
 		return nil, resp
@@ -66,7 +66,7 @@ end
 -- get indices of available SMS
 -- This pattern should match all the fields of a response header
 -- In order: Message index, message status, sender, nil, the time of message reception
-local sms_header_pattern = "%+CMGL: (%d+),(\"REC U?N?READ\"),\"%+(%d+)\",,\"(.+)\""
+local sms_header_pattern = "%+CMGL: (%d+),(\"REC [U]?[N]?READ\"),\"%+(%d+)\",,\"(.+)\""
 function lib.poll_sms()
 	-- step 1: List all the available messages
 	local messages = lib.send_command("AT+CMGL=\"ALL\"")
@@ -86,10 +86,11 @@ function lib.poll_sms()
 	end
 	-- step 3: Parse the list, line-by-line
 	local list = {}
-	local index, status, from, time, data = nil, nil, nil, nil, ""
+	local index, status, from, time, data = 0, nil, nil, nil, ""
 	for i, v in ipairs(lines) do
 		if v == "" and lines[i + 1] == "OK" then
 			if #data > 0 then
+				print(index, data)
 				list[index] = {
 					from = from,
 					time = time,
