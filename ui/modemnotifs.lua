@@ -46,5 +46,5 @@ while true do
 			io.open("/tmp/sent_texts", "w"):close()
 		end
 	end
-	socket.sleep(5)
+	socket.sleep(2)
 end
