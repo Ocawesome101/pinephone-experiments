@@ -16,8 +16,14 @@ UI_APPS = {
 	{name = "Texts",
 		icon = "images/texts.bin",
 		script = "apps/texts.lua"},
+	{name = "Settings",
+		icon = "images/settings.bin",
+		script = "apps/settings.lua"}
 }
 UI_ICON_SCALE = UI_SCALE * 2
+
+-- a real configuration file :O
+dofile("ui_config.lua")
 
 local ui = require("lib/ui")
 local fb = require("lib/framebuffer")

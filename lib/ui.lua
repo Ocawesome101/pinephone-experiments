@@ -198,11 +198,11 @@ local textbox = {}
 ui.textbox = textbox
 
 -- Some constants.
-local KEY_HEIGHT = 80
-local KEY_WIDTH = 70
-local KEY_SPACING = 2
-local KEY_FG = 0x000000
-local KEY_BG = 0xAAAAAA
+local KEY_HEIGHT = KEY_HEIGHT or 80
+local KEY_WIDTH = KEY_WIDTH or 70
+local KEY_SPACING = KEY_SPACING or 2
+local KEY_FG = KEY_FG or 0x000000
+local KEY_BG = KEY_BG or 0xAAAAAA
 local KB_HEIGHT = (KEY_HEIGHT * 4) + (KEY_SPACING * 2) + KEY_SPACING 
 
 -- internal keyboard object
@@ -370,7 +370,8 @@ do
 end
 
 textbox.draw = true
--- TODO: y coordinate currently hardcoded
+-- TODO: y coordinate currently semi-hardcoded
+-- the Y coordinate does *not* do the intuitive thing currently.
 function textbox.new(x, y, w, h, fg, bg)
 	local new
 	local UI_HEIGHT = UI_HEIGHT or 1440
