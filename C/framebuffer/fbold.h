@@ -2,43 +2,38 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <sys/mman.h>
 
 #ifndef FRAMEBUFFER_DEVICE
 #define FRAMEBUFFER_DEVICE "/dev/fb0"
 #endif
 
-int fbdev;
-char *fbp = 0;
+FILE* fbdev;
+unsigned long fcpos;
 lua_Integer fb_width, fb_height;
 
 void fb_init() {
-	fbdev = open(FRAMEBUFFER_DEVICE, O_RDWR);
+	fbdev = fopen(FRAMEBUFFER_DEVICE, "w");
 	if (fbdev == -1) {
 		fprintf(stderr, "cannot open framebuffer device\n");
 		exit(1);
 	}
 	fb_width = 0;
 	fb_height = 0;
+	fcpos = 0;
 }
 
-int fb_write_raw(unsigned long seek_to, unsigned int color) {
-	if (fbp == 0) {
-		return -1;
+void fb_write_raw(unsigned long seek_to, unsigned int color) {
+	if (seek_to != fcpos) {
+		fseek(fbdev, seek_to, 0);
+		fcpos = seek_to + 4;
 	}
 	int b = color & 0x0000FF;
 	int g = (color >> 8) & 0x00FF00;
 	int r = (color >> 16);
-	/*fputc(b, fbdev);
+	fputc(b, fbdev);
 	fputc(g, fbdev);
 	fputc(r, fbdev);
-	fputc(0, fbdev);*/
-	*(fbp + seek_to) = b;
-	*(fbp + seek_to + 1) = g;
-	*(fbp + seek_to + 2) = r;
-	*(fbp + seek_to + 3) = 0;
-	return 0;
+	fputc(0, fbdev);
 }
 
 long int fb_get_coordinates(lua_Integer x, lua_Integer y) {
@@ -48,10 +43,7 @@ long int fb_get_coordinates(lua_Integer x, lua_Integer y) {
 static int fb_set_size(lua_State* L) {
 	fb_width = luaL_checkinteger(L, 1);
 	fb_height = luaL_checkinteger(L, 2);
-	// TODO: we may need to unmap this through ex. fb_deinit()
-	fbp = (char *)mmap(0, fb_width * fb_height,
-		PROT_READ | PROT_WRITE, MAP_SHARED, fbdev, 0);
-	return 0;
+	return 1;
 }
 
 static int fb_set_pixel(lua_State* L) {
@@ -60,7 +52,8 @@ static int fb_set_pixel(lua_State* L) {
 	lua_Integer color = luaL_checkinteger(L, 3);
 	long seek_to = fb_get_coordinates(x, y);
 	fb_write_raw(seek_to, color);
-	return 0;
+	fflush(fbdev);
+	return 1;
 }
 
 static int fb_fill(lua_State* L) {
@@ -76,11 +69,12 @@ static int fb_fill(lua_State* L) {
 			fb_write_raw(seek_to, color);
 		}
 	}
-	return 0;
+	fflush(fbdev);
+	return 1;
 }
 
 static int fb_get_size(lua_State* L) {
 	lua_pushinteger(L, fb_width);
 	lua_pushinteger(L, fb_height);
-	return 2;
+	return 1;
 }
