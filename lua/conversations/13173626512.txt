@@ -1,0 +1,5 @@
+F(18:04:26-16,Send you a text
+)
+T(this is a test. can you send me another text?)
+T(rffffgh)
+T(lol my text thing crashed when you sent me a text)
