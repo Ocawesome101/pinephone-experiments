@@ -27,13 +27,12 @@ int fb_write_raw(unsigned long seek_to, unsigned int color) {
 	if (fbp == 0) {
 		return -1;
 	}
+	if (seek_to > fb_width * fb_height * 4) {
+		return 0;
+	}
 	int b = color & 0x0000FF;
 	int g = (color >> 8) & 0x00FF00;
 	int r = (color >> 16);
-	/*fputc(b, fbdev);
-	fputc(g, fbdev);
-	fputc(r, fbdev);
-	fputc(0, fbdev);*/
 	*(fbp + seek_to) = b;
 	*(fbp + seek_to + 1) = g;
 	*(fbp + seek_to + 2) = r;
@@ -42,6 +41,8 @@ int fb_write_raw(unsigned long seek_to, unsigned int color) {
 }
 
 long int fb_get_coordinates(lua_Integer x, lua_Integer y) {
+	x -= 1;
+	//y -= 1;
 	return (x * 4) + (y * fb_width * 4) - 4;
 }
 
@@ -49,7 +50,8 @@ static int fb_set_size(lua_State* L) {
 	fb_width = luaL_checkinteger(L, 1);
 	fb_height = luaL_checkinteger(L, 2);
 	// TODO: we may need to unmap this through ex. fb_deinit()
-	fbp = (char *)mmap(0, fb_width * fb_height,
+	// TODO: this WILL NOT WORK with color depths != 32 bit BRGT
+	fbp = (char *)mmap(0, (fb_width * fb_height * 4),
 		PROT_READ | PROT_WRITE, MAP_SHARED, fbdev, 0);
 	return 0;
 }
