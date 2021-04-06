@@ -34,5 +34,29 @@ function lib.draw_image(img, x, y, s)
 		end
 	end
 end
+--[[
+function lib.draw_image(img, x, y, s)
+	local o = 0
+	for i=1, #img, 1 do
+		local line = img[i]
+		if s then
+			local p = 0
+			for seg in line:gmatch("....") do
+				local col = (seg:byte(1)*256*256)+(seg:byte(2)*256)+(seg:byte(3))
+				fb.fill_area(x + p, y + o - 1, s, s)
+				p = p + s
+			end
+			o = o + s
+		else
+			local p = 0
+			for seg in line:gmatch("....") do
+				local col = (seg:byte(1)*256*256)+(seg:byte(2)*256)+(seg:byte(3))
+				fb.set_pixel(x + p, y + o - 1, col)
+				p = p + 1
+			end
+			o = o + 1
+		end
+	end
+end]]
 
 return lib
