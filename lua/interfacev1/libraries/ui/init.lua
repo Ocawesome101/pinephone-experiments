@@ -7,6 +7,12 @@ local fbtext = require("libraries/framebuffertext")
 
 local ui = {}
 
+fbtext.loadFont("resources/font.bin")
+
+local function calc_pos(fb, n)
+  return math.floor((m / 100) * fb.w)
+end
+
 ---- base object ----
 
 ui.Base = class()
@@ -24,7 +30,9 @@ end
 
 function ui.Base:tap(x, y)
   for k, v in pairs(self.children) do
-    if x > v.x and y > v.y and x < v.x + v.w and y < v.x + v.w then
+    if x > calc_pos(self.fb, v.x) and y > calc_pos(self.fb, v.y)
+        and x < calc_pos(self.fb, v.x + v.w)
+        and y < calc_pos(self.fb, v.x + v.w) then
       v:tap(x - v.x, y - v.y)
       break
     end
@@ -35,7 +43,11 @@ end
 -- this function should not be touched
 function ui.Base:repaint(x, y, force)
   if self.repaint_needed or force then
-    self.fb:fill(x + self.x, y + self.y, self.w, self.h, self.color)
+    self.fb:fill(
+      calc_pos(self.fb, x + self.x),
+      calc_pos(self.fb, y + self.y),
+      calc_pos(self.fb, self.w),
+      calc_pos(self.fb, self.h), self.color)
   end
   self.repaint_needed = false
   for k, v in pairs(self.children) do
@@ -86,7 +98,7 @@ ui.Label = ui.Base()
 
 function ui.Label:__init(args)
   ui.Base.__init(self, args)
-  self.text = {x = 1, y = 1, text = "", scale = 1}
+  self.text = {x = 1, y = 1, text = "", scale = 2}
   return self
 end
 
@@ -103,8 +115,17 @@ end
 
 function ui.Label:repaint(x, y, force)
   ui.Base.repaint(self, x, y, force)
-  if #self.text.text > 0 then
-    -- TODO draw text
+  if self.repaint_needed or force then
+    if #self.text.text > 0 then
+      fbtext.write_at(self.fb,
+        self.text.x + calc_pos(self.fb, self.x + x),
+        self.text.y + calc_pos(self.fb, self.y + y),
+        self.text.text, self.text.color or 0,
+        self.text.scale)
+    end
   end
+  self.repaint_needed = false
   return self
 end
+
+return ui
