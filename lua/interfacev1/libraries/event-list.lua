@@ -1,6 +1,16 @@
 -- a list of most linux input events --
 
+local reverse_index = require("libraries/reverse-index")
+
 local codes = {
+  EV_SYN = {
+    SYN_REPORT = 0,
+    SYN_CONFIG = 1,
+    SYN_MT_REPORT = 2,
+    SYN_DROPPED = 3,
+    SYN_MAX = 0xf,
+    SYN_CNT = 0x10
+  },
   EV_KEY = {
     KEY_RESERVED = 0,
     KEY_ESC = 1,
@@ -733,18 +743,76 @@ local codes = {
     ABS_MT_TOOL_X = 0x3c, 
     ABS_MT_TOOL_Y = 0x3d, 
 
-
     ABS_MAX = 0x3f,
-    ABS_CNT = 0x40, --(ABS_MAX+1)
+    ABS_CNT = 0x40,
+  },
+  EV_SW = {
+    SW_LID = 0x00,
+    SW_TABLET_MODE = 0x01,
+    SW_HEADPHONE_INSERT = 0x02,
+    SW_RFKILL_ALL = 0x03,
+    SW_RADIO = SW_RFKILL_ALL,
+    SW_MICROPHONE_INSERT = 0x04,
+    SW_DOCK = 0x05,
+    SW_LINEOUT_INSERT = 0x06,
+    SW_JACK_PHYSICAL_INSERT = 0x07,
+    SW_VIDEOOUT_INSERT = 0x08,
+    SW_CAMERA_LENS_COVER = 0x09,
+    SW_KEYPAD_SLIDE = 0x0a,
+    SW_FRONT_PROXIMITY = 0x0b,
+    SW_ROTATE_LOCK = 0x0c,
+    SW_LINEIN_INSERT = 0x0d,
+    SW_MUTE_DEVICE = 0x0e,
+    SW_PEN_INSERTED = 0x0f,
+    SW_MACHINE_COVER = 0x10,
+    SW_MAX = 0x10,
+    SW_CNT = 0x11,
+  },
+  EV_MSC = {
+    MSC_SERIAL = 0x00,
+    MSC_PULSELED = 0x01,
+    MSC_GESTURE = 0x02,
+    MSC_RAW = 0x03,
+    MSC_SCAN = 0x04,
+    MSC_TIMESTAMP = 0x05,
+    MSC_MAX = 0x07,
+    MSC_CNT = 0x08,
+  },
+  EV_LED = {
+    LED_NUML = 0x00,
+    LED_CAPSL = 0x01,
+    LED_SCROLLL = 0x02,
+    LED_COMPOSE = 0x03,
+    LED_KANA = 0x04,
+    LED_SLEEP = 0x05,
+    LED_SUSPEND = 0x06,
+    LED_MUTE = 0x07,
+    LED_MISC = 0x08,
+    LED_MAIL = 0x09,
+    LED_CHARGING = 0x0a,
+    LED_MAX = 0x0f,
+    LED_CNT = 0x10,
+  },
+  EV_REP = {
+    REP_DELAY = 0x00,
+    REP_PERIOD = 0x01,
+    REP_MAX = 0x01,
+    REP_CNT = 0x02,
+  },
+  EV_SND = {
+    SND_CLICK = 0x00,
+    SND_BELL = 0x01,
+    SND_TONE = 0x02,
+    SND_MAX = 0x07,
+    SND_CNT = 0x08,
   }
 }
 
 -- reverse-index these.
 for k, v in pairs(codes) do
-  for kk, vv in pairs(v) do v[vv] = kk end
+  reverse_index(v)
 end
 
--- TODO: support the rest of the events
 -- TODO: perhaps parse linux/input-event-codes.h for event codes?
 
 local events = {
@@ -760,11 +828,11 @@ local events = {
   EV_FF  = 0x15,
   EV_PWR = 0x16,
   EV_FF_STATUS = 0x17,
-  EV_MAX = 0x1f
+  EV_MAX = 0x1f,
   EV_CNT = 0x20
 }
 
-for k, v in pairs(events) do events[v] = k end
+reverse_index(events)
 
 return {
   events = events,
