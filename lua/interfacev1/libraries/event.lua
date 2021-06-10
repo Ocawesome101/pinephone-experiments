@@ -47,15 +47,15 @@ function _evt:poll()
   if available == 0 then return end
 
   for i, v in pairs(self.fds) do
+    -- is there data available?
     if v.revents.IN then
-      -- this is where the fun begins.
       -- 1.  read the event data.
       local etype, ecode, evalue = self:read_event(i)
 
-      -- if the event is in the list, then act on it.
+      -- 2.  if the event is in the list, then act on it.
       if events[etype] then
         local codes = codes[ecode]
-        -- only return one event at a time.
+        -- 3.  only return one event at a time.
         return self.ids[i], etype, ecode, evalue
       else
         return nil, "unrecognized event " .. etype
@@ -64,13 +64,21 @@ function _evt:poll()
   end
 end
 
+-- add the file 'file' with ID 'id'
 function _evt:open(file, id)
   check(1, file, "string")
   check(2, id, "string")
+  
+  -- open the file
   local handle = assert(io.open(file, "r"))
+  
+  -- get the file descriptor associated with the file handle
   local no = fileno(handle)
+
+  -- register the ID, handle, and file descriptor
   self.ids[no] = id
   self.files[no] = handle
+  -- POLLIN:  "Data other than high-priority data may be read without blocking"
   self.fds[no] = { events = { IN = true } }
   return self
 end

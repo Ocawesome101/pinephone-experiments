@@ -4,6 +4,7 @@ local evt = require("libraries/event").new()
 local list = require("libraries/event-list")
 
 evt:open("/dev/input/event0", "keyboard")
+evt:open("/dev/input/event4", "touchpad")
 
 while true do
   local from, etype, code, value = evt:poll()
