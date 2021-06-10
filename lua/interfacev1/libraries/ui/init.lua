@@ -7,10 +7,12 @@ local fbtext = require("libraries/framebuffertext")
 
 local ui = {}
 
-fbtext.loadFont("resources/font.bin")
+fbtext.load_font("resources/font.bin")
 
-local function calc_pos(fb, n)
-  return math.floor((m / 100) * fb.w)
+-- used in calculating sizes and positions relative to parent objects. --
+local function calc_pos(self, n)
+  local w = self.parent and self.parent.w or self.fb.w
+  return math.floor((n / 100) * w)
 end
 
 ---- base object ----
@@ -18,9 +20,10 @@ end
 ui.Base = class()
 
 function ui.Base:__init(args)
-  self.fb = args.framebuffer or self.framebuffer
-  self.w = args.width
-  self.h = args.height
+  self.repaint_needed = true
+  self.fb = args.framebuffer or self.fb or {}
+  self.w = args.width or self.fb.w
+  self.h = args.height or self.fb.h
   self.x = args.x or 1
   self.y = args.y or 1
   self.color = args.color or 0
@@ -30,9 +33,9 @@ end
 
 function ui.Base:tap(x, y)
   for k, v in pairs(self.children) do
-    if x > calc_pos(self.fb, v.x) and y > calc_pos(self.fb, v.y)
-        and x < calc_pos(self.fb, v.x + v.w)
-        and y < calc_pos(self.fb, v.x + v.w) then
+    if x > calc_pos(self, v.x) and y > calc_pos(self, v.y)
+        and x < calc_pos(self, v.x + v.w)
+        and y < calc_pos(self, v.x + v.w) then
       v:tap(x - v.x, y - v.y)
       break
     end
@@ -40,14 +43,27 @@ function ui.Base:tap(x, y)
   return self
 end
 
+function ui.Base:key(key)
+  for k, v in pairs(self.children) do
+    v:key(key)
+  end
+  return self
+end
+
+function ui.Base:add_child(chl)
+  chl.parent = self
+  self.children[#self.children+1] = chl
+  return self
+end
+
 -- this function should not be touched
 function ui.Base:repaint(x, y, force)
   if self.repaint_needed or force then
     self.fb:fill(
-      calc_pos(self.fb, x + self.x),
-      calc_pos(self.fb, y + self.y),
-      calc_pos(self.fb, self.w),
-      calc_pos(self.fb, self.h), self.color)
+      calc_pos(self, self.x) + x,
+      calc_pos(self, self.y) + x,
+      calc_pos(self, self.w),
+      calc_pos(self, self.h), self.color)
   end
   self.repaint_needed = false
   for k, v in pairs(self.children) do
@@ -58,7 +74,7 @@ end
 
 ---- windows! ----
 
-ui.Window = ui.Base()
+ui.Window = ui.Base({})
 
 function ui.Window:__init(args)
   ui.Base.__init(self, args)
@@ -81,24 +97,26 @@ end
 function ui.Window:repaint(x, y, force)
   ui.Base.repaint(self, x, y, force)
   if self.pages[self.page] then
-    self.pages[self.page]:repaint(self.x + x, self.y + y, force)
+    self.pages[self.page]:repaint(
+      calc_pos(self, self.x) + x,
+      calc_pos(self, self.y) + y, force)
   end
 end
 
 ---- pages ----
 
-ui.Page = ui.Base()
+ui.Page = ui.Base({})
 
 -- pages can pretty much just stay as the base element, since they're
 -- effectively windows in windows.
 
 ---- labels ----
 
-ui.Label = ui.Base()
+ui.Label = ui.Base({})
 
 function ui.Label:__init(args)
   ui.Base.__init(self, args)
-  self.text = {x = 1, y = 1, text = "", scale = 2}
+  self.text = {x = 1, y = 1, text = "", scale = 2, parent = self}
   return self
 end
 
@@ -114,12 +132,13 @@ function ui.Label:set_text_scale(sc)
 end
 
 function ui.Label:repaint(x, y, force)
+  local orepn = self.repaint_needed
   ui.Base.repaint(self, x, y, force)
-  if self.repaint_needed or force then
+  if orepn or force then
     if #self.text.text > 0 then
       fbtext.write_at(self.fb,
-        self.text.x + calc_pos(self.fb, self.x + x),
-        self.text.y + calc_pos(self.fb, self.y + y),
+        y + calc_pos(self, self.x) + calc_pos(self.text, self.text.x),
+        x + calc_pos(self, self.y) + calc_pos(self.text, self.text.y),
         self.text.text, self.text.color or 0,
         self.text.scale)
     end

@@ -77,8 +77,8 @@ transformers[events.EV_KEY] = function(code, value)
   elseif keyname == "capslock" then
     ktstate.capslock = not (key_state == "release")
   end
-  local shift = (ktstates.shift and not ktstates.capslock) or
-                (ktstates.capslock and not ktstates.shift)
+  local shift = (ktstate.shift and not ktstate.capslock) or
+                (ktstate.capslock and not ktstate.shift)
   
   key_name = key_aliases[key_name] or key_name
 
@@ -86,7 +86,7 @@ transformers[events.EV_KEY] = function(code, value)
   -- string API - so, even if key_name is a string, key_name[1] just indexes
   -- string[1] or nil.
   key_name = key_name[shift and 2 or 1] or key_name[1] or key_name
-  return key_name, key_state
+  return "key", key_name, key_state
 end
 
 local mtstate = {
@@ -103,12 +103,16 @@ transformers[events.EV_ABS] = function(code, value)
     if mtstate.lastx == 0 then mtstate.lastx = value return nil end
     local diff = mtstate.lastx - value
     mtstate.lastx = value
-    return "move_x", -diff
+    if diff > -30 and diff < 30 then
+      return "mouse_move_x", -diff
+    end
   elseif code == codes.EV_ABS.ABS_Y then
     if mtstate.lasty == 0 then mtstate.lasty = value return nil end
     local diff = mtstate.lasty - value
     mtstate.lasty = value
-    return "move_y", -diff
+    if diff > -30 and diff < 30 then
+      return "mouse_move_y", -diff
+    end
   elseif code == codes.EV_KEY.BTN_LEFT then
     return "click_left", "left"
   elseif code == codes.EV_KEY.BTN_RIGHT then
@@ -129,8 +133,9 @@ end
 
 local function transform(etype, code, value)
   if transformers[etype] then
-    return etype, transformers[etype](code, value)
+    return transformers[etype](code, value)
   end
+  return etype, code, value
 end
 
 return transform
