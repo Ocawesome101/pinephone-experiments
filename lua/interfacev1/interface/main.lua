@@ -9,11 +9,14 @@ local ui = require("libraries/ui")
 local dialog = require("libraries/ui/dialog")
 local image = require("libraries/image")
 
--- TODO: make this configurable
-local fb = framebuffer.new("/dev/fb0", 1920, 1080)
+dofile("ui.cfg")
+
+local fb = framebuffer.new(FRAMEBUFFER_FILE or "/dev/fb0",
+  SCREEN_WIDTH or 1920, SCREEN_HEIGHT or 1080)
 local evt = event.new()
-  :open("/dev/input/event0", "keyboard")
-  :open("/dev/input/event4", "touchpad")
+if INPUT_KEYBOARD then evt:open(INPUT_KEYBOARD, "keyboard") end
+if INPUT_TOUCHPAD then evt:open(INPUT_TOUCHPAD, "touchpad") end
+if INPUT_TOUCHSCREEN then evt:open(INPUT_TOUCHSCREEN, "touchscreen") end
 
 local cursor = image.load_image("resources/cursor.bin")
 
@@ -40,6 +43,7 @@ local function pdofile(file, ...)
       text = "this is a text dialog.",
     }
     ui_root:add_child(dialog)
+    return
   else
     return select(2, pcall(ok, ...))
   end
@@ -47,16 +51,20 @@ end
 
 local function open_app(file)
   local iface = pdofile(file)
-  ui_root:add_child(iface)
+  if iface then ui_root:add_child(iface) end
 end
 
 local cx, cy = 480, 480
 local function redraw()
   cx = math.max(1, math.min(cx, fb.w))
   cy = math.max(1, math.min(cy, fb.h))
-  ui_root:repaint(1, 1)
+  ui_root:repaint(0, 0)
   image.draw_image(fb, cursor, cx, cy, 2)
 end
+
+open_app("tesT")
+
+redraw()
 
 local r = true
 while true do
@@ -66,5 +74,5 @@ while true do
   if e1 == "mouse_move_x" then cx = cx + e2
   elseif e1 == "mouse_move_y" then cy = cy + e2
   elseif e1 == "click_left" then ui_root:tap(cx, cy)
-  end
+  elseif e1 == "key" then ui_root:key(e2, e3) end
 end

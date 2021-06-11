@@ -5,7 +5,7 @@ local check = require("libraries/checkArg")
 local _fb = {}
 
 local function compute_xy(x, y, w, h)
-  return (x * 4) + (y * w * 4) - 5
+  return math.min(w * h * 4, (x * 4) + (y * w * 4) - 4)
 end
 
 local function pack_color(num)

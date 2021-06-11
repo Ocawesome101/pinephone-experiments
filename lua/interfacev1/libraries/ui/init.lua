@@ -43,9 +43,9 @@ function ui.Base:tap(x, y)
   return self
 end
 
-function ui.Base:key(key)
+function ui.Base:key(key, state)
   for k, v in pairs(self.children) do
-    v:key(key)
+    v:key(key, state)
   end
   return self
 end
@@ -58,6 +58,7 @@ end
 
 -- this function should not be touched
 function ui.Base:repaint(x, y, force)
+  if not self.fb.fill then self.fb = self.parent.fb or {} end
   if self.repaint_needed or force then
     self.fb:fill(
       calc_pos(self, self.x) + x,
