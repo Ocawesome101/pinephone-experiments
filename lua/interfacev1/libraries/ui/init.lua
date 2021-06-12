@@ -62,13 +62,13 @@ function ui.Base:repaint(x, y, force)
   if self.repaint_needed or force then
     self.fb:fill(
       calc_pos(self, self.x) + x,
-      calc_pos(self, self.y) + x,
+      calc_pos(self, self.y) + y,
       calc_pos(self, self.w),
       calc_pos(self, self.h), self.color)
   end
   self.repaint_needed = false
   for k, v in pairs(self.children) do
-    v:repaint(x + v.x, y + v.y, force)
+    v:repaint(x, y, force)
   end
   return self
 end

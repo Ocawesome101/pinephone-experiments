@@ -18,7 +18,8 @@ if INPUT_KEYBOARD then evt:open(INPUT_KEYBOARD, "keyboard") end
 if INPUT_TOUCHPAD then evt:open(INPUT_TOUCHPAD, "touchpad") end
 if INPUT_TOUCHSCREEN then evt:open(INPUT_TOUCHSCREEN, "touchscreen") end
 
-local cursor = image.load_image("resources/cursor.bin")
+local cursor = io.open("resources/cursor.txt")
+cursor = cursor:read("a")
 
 local function get_event()
   local _from, _type, _code, _value = evt:poll()
@@ -40,7 +41,7 @@ local function pdofile(file, ...)
   if not ok then
     local dialog = dialog {
       framebuffer = fb,
-      text = "this is a text dialog.",
+      text = err,
     }
     ui_root:add_child(dialog)
     return
@@ -55,11 +56,44 @@ local function open_app(file)
 end
 
 local cx, cy = 480, 480
+local ocx, ocy = 480, 480
+local cdb = {}
+
+local function refresh()
+  -- overwrite old cursor
+  for i=ocy, ocy+32, 1 do
+    if cdb[i - ocy + 1] then
+      fb:__set_raw(ocx, i, cdb[i - ocy + 1])
+    end
+  end
+  ocx, ocy = cx, cy
+
+  -- repaint UI
+  ui_root:repaint(0, 0)
+
+  -- copy screen data at cursor pos to buffer
+  for i=cy, cy+32, 1 do
+    fb:__set_raw(cx, i, "")
+    local ok, err = fb.__handle:read(32*4)
+    cdb[i-cy+1] = ok or cdb[i-cy+1]
+  end
+
+  -- write cursor data to framebuffer
+  local line = ""
+  local o = 0
+  local n = 0
+  for c in cursor:gmatch(".") do
+    if c == " " then o = o + 1
+    elseif c == "\n" then fb:__set_raw(cx + o, cy + n, line); o = 0; line = ""; n = n + 1
+    elseif c == "#" then line = line .. "\xEE\xEE\xEE\0"
+    elseif c == "." then line = line .. "\0\0\0\0" end
+  end
+end
+
 local function redraw()
   cx = math.max(1, math.min(cx, fb.w))
   cy = math.max(1, math.min(cy, fb.h))
-  ui_root:repaint(0, 0)
-  image.draw_image(fb, cursor, cx, cy, 2)
+  refresh()
 end
 
 open_app("tesT")
