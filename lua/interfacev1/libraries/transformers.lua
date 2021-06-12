@@ -131,6 +131,24 @@ transformers[events.EV_ABS] = function(code, value)
   return nil
 end
 
+local nix = 10
+local niy = 10
+transformers[events.EV_REL] = function(code, value)
+  if code == codes.EV_REL.REL_X then
+    nix=nix-1
+    if nix==0 then
+      nix=10
+      return "mouse_move_x", value*24
+    end
+  elseif code == codes.EV_REL.REL_Y then
+    niy=niy-1
+    if niy==0 then
+      niy=10
+      return "mouse_move_y", value*24
+    end
+  end
+end
+
 local function transform(etype, code, value)
   if transformers[etype] then
     return transformers[etype](code, value)
